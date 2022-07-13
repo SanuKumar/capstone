@@ -32,7 +32,6 @@ const Product = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(formData)
   }
 
   return (
@@ -118,7 +117,7 @@ const Product = () => {
                   }
                   <br />
                   <Row>
-                    <Col xs={12} sm={6}><strong>₹: </strong></Col>
+                    <Col xs={12} sm={6}><strong>Price ₹: </strong></Col>
                     <Col xs={12} sm={6}>
                       {location.state?.edit ?
                         <input type="number" name="price" value={formData.price} onChange={handleChange} /> :

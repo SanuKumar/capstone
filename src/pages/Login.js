@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import axios from "axios"
 import { useHistory } from 'react-router-dom'
 import { Container, Row, Col, Button } from 'react-bootstrap'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Login = ({ updateLocalStorage }) => {
   let history = useHistory()
@@ -14,7 +16,6 @@ const Login = ({ updateLocalStorage }) => {
   }
   useEffect(() => {
     fetchUser()
-    localStorage.clear()
   }, [])
 
   const handleChange = (e) => {
@@ -24,7 +25,7 @@ const Login = ({ updateLocalStorage }) => {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (formData.email && formData.password) {
       let res = usersData.find((user) => {
@@ -37,32 +38,34 @@ const Login = ({ updateLocalStorage }) => {
         localStorage.setItem('isUserLoggedIn', JSON.stringify(res))
         updateLocalStorage(JSON.stringify(res))
         history.push('/')
+        window.location.reload();
       } else {
-        alert('Please Check the Enter Data')
+        toast.error('Please Check the Enter Credential\'s')
       }
     } else {
-      alert("Please Enter Login Details")
+      toast.error("Please Enter Login Details")
     }
   }
 
   return (
     <>
+      <ToastContainer />
       <Container>
         <div><h2>Login</h2></div>
         <br />
         <form>
           <Row>
-            <Col>Email</Col>
+            <Col sm={12} md={2}>Email</Col>
             <Col><input type="text" name="email" value={formData.email} onChange={handleChange} /></Col>
           </Row>
           <br />
           <Row>
-            <Col>Password</Col>
+            <Col sm={12} md={2}>Password</Col>
             <Col><input type="text" name="password" value={formData.password} onChange={handleChange} /></Col>
           </Row>
           <br />
           <Row>
-            <Col></Col>
+            <Col sm={12} md={2}></Col>
             <Col><Button type='submit' onClick={handleSubmit}>Login</Button></Col>
           </Row>
         </form>

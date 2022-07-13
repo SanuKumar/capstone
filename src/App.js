@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import './App.css';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import ProductList from "./components/ProductList";
 import axios from "axios";
 import Product from "./pages/Product"
 import {
@@ -13,6 +12,12 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import About from "./pages/About";
 import ChartPage from "./pages/ChartPage";
+import AddProduct from "./pages/AddProduct";
+import PageNotFound from "./pages/PageNotFound.js"
+import { Suspense, lazy } from 'react';
+import Loader from "./components/Loader";
+
+const ProductList = React.lazy(() => import('./components/ProductList'));
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -36,8 +41,8 @@ const App = () => {
   }
 
   useEffect(() => {
-    setIsUserLoggedIn(JSON.parse(localStorage.getItem(isUserLoggedIn)))
-  }, [isUserLoggedIn])
+    setIsUserLoggedIn(JSON.parse(localStorage.getItem('isUserLoggedIn')))
+  }, [])
 
   const handleProductSearch = (searchKey) => {
     if (searchKey) {
@@ -51,16 +56,20 @@ const App = () => {
   return (
     <>
       <Header handleProductSearch={handleProductSearch} isUserLoggedIn={isUserLoggedIn} />
-      <div style={{ margin: "10rem 0 5rem 0" }}>
-        <Switch>
-          <Route exact path="/" ><ProductList products={products} loading={loading} /></Route>
-          <Route exact path="/product/:id"><Product /></Route>
-          <Route exact path="/login"><Login updateLocalStorage={updateLocalStorage} /></Route>
-          <Route exact path="/register"><Register /></Route>
-          <Route exact path="/about"><About /></Route>
-          <Route exact path="/chart"><ChartPage products={products} /></Route>
-        </Switch>
-      </div>
+      <Suspense fallback={<Loader />}>
+        <div style={{ margin: "10rem 0 5rem 0" }}>
+          <Switch>
+            <Route exact path="/" ><ProductList products={products} loading={loading} isUserLoggedIn={isUserLoggedIn} /></Route>
+            <Route exact path="/product/:id"><Product isUserLoggedIn={isUserLoggedIn} /></Route>
+            <Route exact path="/login"><Login updateLocalStorage={updateLocalStorage} /></Route>
+            <Route exact path="/register"><Register /></Route>
+            <Route exact path="/about"><About /></Route>
+            <Route exact path="/chart"><ChartPage products={products} /></Route>
+            <Route exact path="/addproduct"><AddProduct /></Route>
+            <Route path="*" component={PageNotFound} />
+          </Switch>
+        </div>
+      </Suspense>
       <Footer />
     </>
   );

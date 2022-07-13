@@ -24,7 +24,7 @@ const ChartPage = ({ products }) => {
 	return (
 		<>
 			<Container>
-				<div>Chart</div>
+				<div><h2>Top Rated Product</h2></div>
 				<Bar data={data} />
 			</Container>
 		</>

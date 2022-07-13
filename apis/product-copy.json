@@ -48,9 +48,7 @@
       "manufacture": "Samsung",
       "category": "smartphones",
       "thumbnail": "https://dummyjson.com/image/i/products/3/thumbnail.jpg",
-      "images": [
-        "https://dummyjson.com/image/i/products/3/1.jpg"
-      ]
+      "images": ["https://dummyjson.com/image/i/products/3/1.jpg"]
     },
     {
       "id": 4,

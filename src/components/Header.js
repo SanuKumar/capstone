@@ -6,23 +6,22 @@ const Header = ({ handleProductSearch, isUserLoggedIn }) => {
   let history = useHistory()
   const UserMenu = (
     <>
-      <Image
-        src={'https://github.com/sanukumar.png'}
-        alt="UserName profile image"
-        roundedCircle
-        style={{ width: '40px' }}
-      />
-      {isUserLoggedIn && <span>{isUserLoggedIn.firstname}</span>}
+      {isUserLoggedIn ?
+        <>
+          <Image
+            src={'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/800px-User_icon_2.svg.png'}
+            alt="UserName profile image"
+            roundedCircle
+            style={{ width: '40px' }}
+          />
+          <span>{isUserLoggedIn.firstname}</span></> : <span>Login</span>}
     </>
   )
-
-  useEffect(() => {
-
-  }, [isUserLoggedIn])
 
   const handleLogout = () => {
     localStorage.clear();
     history.push('/')
+    window.location.reload();
   }
 
   return (

@@ -63,8 +63,6 @@ const Register = () => {
     }
   }
 
-  console.log("userData", userData)
-
   return (
     <>
       {formSuccess &&
@@ -79,37 +77,37 @@ const Register = () => {
         <br />
         <form>
           <Row>
-            <Col>Email</Col>
+            <Col sm={12} md={2}>Email</Col>
             <Col> <input type="text" name="email" value={userData.email} onChange={handleChange} /></Col>
           </Row>
           <br />
           <Row>
-            <Col>Password</Col>
+            <Col sm={12} md={2}>Password</Col>
             <Col>  <input type="text" name="password" value={userData.password} onChange={handleChange} /></Col>
           </Row>
           <br />
           <Row>
-            <Col>First Name</Col>
+            <Col sm={12} md={2}>First Name</Col>
             <Col><input type="text" name="firstname" value={userData.firstname} onChange={handleChange} /></Col>
           </Row>
           <br />
           <Row>
-            <Col>Last Name</Col>
+            <Col sm={12} md={2}>Last Name</Col>
             <Col><input type="text" name="lastname" value={userData.lastname} onChange={handleChange} /></Col>
           </Row>
           <br />
           <Row>
-            <Col>Location</Col>
+            <Col sm={12} md={2}>Location</Col>
             <Col><input type="text" name="location" value={userData.location} onChange={handleChange} /></Col>
           </Row>
           <br />
           <Row>
-            <Col>Mobile Number</Col>
+            <Col sm={12} md={2}>Mobile Number</Col>
             <Col><input type="text" name="number" value={userData.number} onChange={handleChange} /></Col>
           </Row>
           <br />
           <Row>
-            <Col></Col>
+            <Col sm={12} md={2}></Col>
             <Col><Button type='submit' onClick={handleSubmit}>Register</Button></Col>
           </Row>
         </form>
