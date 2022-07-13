@@ -11,19 +11,33 @@ import {
 } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import About from "./pages/About";
+import ChartPage from "./pages/ChartPage";
 
 const App = () => {
   const [products, setProducts] = useState([]);
   const [searchResult, setSearchResult] = useState([])
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(null);
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await axios.get(`http://localhost:3001/products`)
+      setLoading(true)
+      const { data } = await axios.get(`http://localhost:3002/products`)
+      setLoading(false)
       setProducts(data)
       setSearchResult(data)
     }
     fetchData();
   }, [])
+
+  const updateLocalStorage = (key) => {
+    setIsUserLoggedIn(key)
+  }
+
+  useEffect(() => {
+    setIsUserLoggedIn(JSON.parse(localStorage.getItem(isUserLoggedIn)))
+  }, [isUserLoggedIn])
 
   const handleProductSearch = (searchKey) => {
     if (searchKey) {
@@ -36,13 +50,15 @@ const App = () => {
 
   return (
     <>
-      <Header handleProductSearch={handleProductSearch} />
+      <Header handleProductSearch={handleProductSearch} isUserLoggedIn={isUserLoggedIn} />
       <div style={{ margin: "10rem 0 5rem 0" }}>
         <Switch>
-          <Route exact path="/" ><ProductList products={products} /></Route>
+          <Route exact path="/" ><ProductList products={products} loading={loading} /></Route>
           <Route exact path="/product/:id"><Product /></Route>
-          <Route exact path="/login"><Login /></Route>
+          <Route exact path="/login"><Login updateLocalStorage={updateLocalStorage} /></Route>
           <Route exact path="/register"><Register /></Route>
+          <Route exact path="/about"><About /></Route>
+          <Route exact path="/chart"><ChartPage products={products} /></Route>
         </Switch>
       </div>
       <Footer />
