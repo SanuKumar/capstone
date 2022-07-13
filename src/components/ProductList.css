@@ -1,3 +1,7 @@
 .card-title {
   margin-bottom: -0.5rem !important;
 }
+
+input {
+  margin-right: 1rem;
+}
