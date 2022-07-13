@@ -1,8 +1,11 @@
 import React from 'react'
+import { Row, Col } from "react-bootstrap"
 
 const Footer = () => {
   return (
-    <div>Footer</div>
+    <footer className='footer'>
+      <p style={{ color: "white", textAlign: "center" }}>Sanu ©. All rights reserved.</p>
+    </footer>
   )
 }
 
