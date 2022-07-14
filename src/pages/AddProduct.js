@@ -64,7 +64,7 @@ const AddProduct = ({ fetchProductCallBack }) => {
 
   return (
     <>
-      <ToastContainer autoClose={1000}/>
+      <ToastContainer autoClose={1000} />
       <div style={{ float: "right", margin: "-5rem 1rem" }}>
         <Button onClick={() => history.push("/")}>Go Home</Button>
       </div>
@@ -75,54 +75,99 @@ const AddProduct = ({ fetchProductCallBack }) => {
           <Row>
             <Col xs={12} sm={6}><strong>Product Name: </strong></Col>
             <Col xs={12} sm={6}>
-              <input type="text" name="title" value={formData.title} onChange={handleChange} />
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                onClick={() => setModifiedField(true)}
+              />
             </Col>
           </Row>
           <br />
           <Row>
             <Col xs={12} sm={6}><strong>Product Description: </strong></Col>
             <Col xs={12} sm={6}>
-              <textarea type="text" name="description" value={formData.description} onChange={handleChange} />
+              <textarea
+                type="text"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                onClick={() => setModifiedField(true)}
+              />
             </Col>
           </Row>
           <br />
           <Row>
             <Col xs={12} sm={6}><strong>Manufacture: </strong></Col>
             <Col xs={12} sm={6}>
-              <input type="text" name="manufacture" value={formData.manufacture} onChange={handleChange} />
+              <input
+                type="text"
+                name="manufacture"
+                value={formData.manufacture}
+                onChange={handleChange}
+                onClick={() => setModifiedField(true)}
+              />
             </Col>
           </Row>
           <br />
           <Row>
             <Col xs={12} sm={6}><strong>Category</strong></Col>
             <Col xs={12} sm={6}>
-              <input type="text" name="category" value={formData.category} onChange={handleChange} />
+              <input
+                type="text"
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                onClick={() => setModifiedField(true)}
+              />
             </Col>
           </Row>
           <br />
           <Row>
             <Col xs={12} sm={6}><strong>Price</strong></Col>
             <Col xs={12} sm={6}>
-              <input type="number" name="price" value={formData.price} onChange={handleChange} />
+              <input
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+                onClick={() => setModifiedField(true)}
+              />
             </Col>
           </Row>
           <br />
           <Row>
             <Col xs={12} sm={6}><strong>Quantity</strong></Col>
             <Col xs={12} sm={6}>
-              <input type="number" name="quantity" value={formData.quantity} onChange={handleChange} />
+              <input
+                type="number"
+                name="quantity"
+                value={formData.quantity}
+                onChange={handleChange}
+                onClick={() => setModifiedField(true)}
+              />
             </Col>
           </Row>
           <br />
           <Row>
             <Col xs={12} sm={6}><strong>Image Url</strong></Col>
             <Col xs={12} sm={6}>
-              <input type="text" name="thumbnail" value={formData.thumbnail} onChange={handleChange} />
+              <input
+                type="text"
+                name="thumbnail"
+                value={formData.thumbnail} onChange={handleChange}
+                onClick={() => setModifiedField(true)}
+              />
             </Col>
           </Row>
           <br />
           <div style={{ marginTop: "2rem" }}>
-            <Button type="submit" onClick={handleAddProduct}>Add Product</Button>
+            <Button
+              type="submit"
+              onClick={handleAddProduct}>
+              Add Product
+            </Button>
           </div>
         </form>
       </Container>

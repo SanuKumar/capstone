@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios"
-import { useHistory } from 'react-router-dom'
+import { useHistory, Prompt } from 'react-router-dom'
 import { Container, Row, Col, Button } from 'react-bootstrap'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -10,7 +10,10 @@ import * as Yup from "yup"
 const Login = ({ updateLocalStorage }) => {
   let history = useHistory()
   const [usersData, setUsersData] = useState([])
-  const [formData, setFormData] = useState({ email: "", password: "" })
+  const initialValues = {
+    email: "", password: ""
+  }
+  const [modifiedField, setModifiedField] = useState(false)
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Field should contain a valid e-mail").max(255).required("E-mail is required"),
@@ -25,14 +28,14 @@ const Login = ({ updateLocalStorage }) => {
     fetchUser()
   }, [])
 
-  const handleSubmit = async (values) => {
-    console.log("values", values)
+  const handleSubmit = async (values, resetForm) => {
     let res = usersData.find((user) => {
       if (user.email === values.email && user.password === values.password) {
         return user
       }
     })
     if (res) {
+      resetForm()
       alert("User Successfully Logged In")
       localStorage.setItem('isUserLoggedIn', JSON.stringify(res))
       updateLocalStorage(JSON.stringify(res))
@@ -52,21 +55,22 @@ const Login = ({ updateLocalStorage }) => {
         <div><h2>Login</h2></div>
         <br />
         <Formik
-          initialValues={formData}
+          initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={(values, { setSubmitting }) => {
-            handleSubmit(values)
+          onSubmit={(values, { setSubmitting, resetForm }) => {
+            handleSubmit(values, resetForm)
             setSubmitting(false)
           }}
         >
           {({
+            values,
             errors,
             touched,
             handleSubmit,
             isSubmitting,
             getFieldProps
           }) => (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} autoComplete="off">
               <Row>
                 <Col sm={12} md={2}>Email</Col>
                 <Col>
@@ -74,6 +78,7 @@ const Login = ({ updateLocalStorage }) => {
                     name="email"
                     placeholder="Enter Email ID"
                     {...getFieldProps("email")}
+                    onClick={() => { values.email && setModifiedField(true) }}
                   />
                   <p className='form-error-msg'>{errors.email && touched.email && errors.email}</p>
                 </Col>
@@ -87,6 +92,7 @@ const Login = ({ updateLocalStorage }) => {
                     name="password"
                     placeholder="Enter Password"
                     {...getFieldProps("password")}
+                    onClick={() => { values.password && setModifiedField(true) }}
                   />
                   <p className='form-error-msg'>{errors.password && touched.password && errors.password}</p>
                 </Col>
@@ -106,9 +112,9 @@ const Login = ({ updateLocalStorage }) => {
             </form>
           )}
         </Formik>
-
       </Container>
-    </div >
+      <Prompt when={modifiedField} message={`Are you sure want to exit without Login?!!`} />
+    </div>
   )
 }
 

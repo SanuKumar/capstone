@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Row, Col, Container, Alert, Button } from 'react-bootstrap'
-import { useHistory } from 'react-router-dom'
-import { Formik, validateYupSchema } from 'formik'
+import { Row, Col, Container, Button } from 'react-bootstrap'
+import { useHistory ,Prompt} from 'react-router-dom'
+import { Formik } from 'formik'
 import * as Yup from "yup"
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 const Register = () => {
   const [registerUser, setRegisterUser] = useState([])
+  const [modifiedField, setModifiedField] = useState(false)
   let history = useHistory()
   let initialData = {
     email: "",
@@ -26,13 +27,10 @@ const Register = () => {
     password: Yup.string().required("password is required"),
     firstname: Yup.string().required("firstname is required"),
     lastname: Yup.string().required("lastname is required"),
-    location: Yup.string().required("location is required"),
+    location: Yup.string(),
     phoneNumber: Yup.string().matches(phoneRegExp, 'Phone number is not valid').min(10, "to short")
       .max(10, "to long"),
   })
-
-
-  const [userData, setUserData] = useState(initialData)
 
   const fetchUser = async () => {
     let { data } = await axios.get(`http://localhost:3001/users`)
@@ -57,7 +55,6 @@ const Register = () => {
     } else {
       let res = await axios.post(`http://localhost:3001/users`, values)
       if (res.status === 201) {
-        setUserData(initialData)
         await timeout(2000);
         history.push("/login")
       }
@@ -80,6 +77,7 @@ const Register = () => {
           }}
         >
           {({
+            values,
             errors,
             touched,
             handleSubmit,
@@ -94,6 +92,7 @@ const Register = () => {
                     name="email"
                     placeholder="Enter Email ID"
                     {...getFieldProps("email")}
+                    onClick={() => { values.email && setModifiedField(true) }}
                   />
                   <span className='form-error-msg'>{errors.email && touched.email && errors.email}</span>
                 </Col>
@@ -106,6 +105,7 @@ const Register = () => {
                     type="password"
                     placeholder="Enter Password"
                     {...getFieldProps("password")}
+                    onClick={() => { values.password && setModifiedField(true) }}
                   />
                   <span className='form-error-msg'>{errors.password && touched.password && errors.password}</span>
                 </Col>
@@ -117,6 +117,7 @@ const Register = () => {
                   <input
                     name="firstname"
                     {...getFieldProps("firstname")}
+                    onClick={() => { values.firstname && setModifiedField(true) }}
                   />
                   <span className='form-error-msg'>{errors.firstname && touched.firstname && errors.firstname}</span>
                 </Col>
@@ -128,6 +129,7 @@ const Register = () => {
                   <input
                     name="lastname"
                     {...getFieldProps("lastname")}
+                    onClick={() => { values.lastname && setModifiedField(true) }}
                   />
                   <span className='form-error-msg'>{errors.lastname && touched.lastname && errors.lastname}</span>
                 </Col>
@@ -139,6 +141,7 @@ const Register = () => {
                   <input
                     name="location"
                     {...getFieldProps("location")}
+                    onClick={() => { values.location && setModifiedField(true) }}
                   />
                   <span className='form-error-msg'>{errors.location && touched.location && errors.location}</span>
                 </Col>
@@ -151,6 +154,7 @@ const Register = () => {
                     type="phoneNumber"
                     name="phoneNumber"
                     {...getFieldProps("phoneNumber")}
+                    onClick={() => { values.phoneNumber && setModifiedField(true) }}
                   />
                   <span className='form-error-msg'>{errors.phoneNumber && touched.phoneNumber && errors.phoneNumber}</span>
                 </Col>
@@ -169,6 +173,7 @@ const Register = () => {
           )}
         </Formik>
       </Container>
+      <Prompt when={modifiedField} message={`Are you sure want to exit without Registering?!!`} />
     </>
   )
 }

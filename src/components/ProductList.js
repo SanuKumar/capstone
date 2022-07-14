@@ -150,7 +150,7 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
                         src={p.thumbnail}
                         height={250}
                         width={250}
-                        style={{ padding: "0.3rem" }}
+                        style={{ padding: "0.3rem", cursor: "pointer" }}
                         onClick={() => handleViewProduct(p.id)}
                       />
                       <Card.Body>
