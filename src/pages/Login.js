@@ -4,7 +4,7 @@ import { useHistory, Prompt } from 'react-router-dom'
 import { Container, Row, Col, Button } from 'react-bootstrap'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { Formik, validateYupSchema } from 'formik'
+import { Formik, useFormikContext, Form } from 'formik'
 import * as Yup from "yup"
 
 const Login = ({ updateLocalStorage }) => {
@@ -13,7 +13,6 @@ const Login = ({ updateLocalStorage }) => {
   const initialValues = {
     email: "", password: ""
   }
-  const [modifiedField, setModifiedField] = useState(false)
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Field should contain a valid e-mail").max(255).required("E-mail is required"),
@@ -28,14 +27,13 @@ const Login = ({ updateLocalStorage }) => {
     fetchUser()
   }, [])
 
-  const handleSubmit = async (values, resetForm) => {
+  const handleSubmit = async (values) => {
     let res = usersData.find((user) => {
       if (user.email === values.email && user.password === values.password) {
         return user
       }
     })
     if (res) {
-      resetForm()
       alert("User Successfully Logged In")
       localStorage.setItem('isUserLoggedIn', JSON.stringify(res))
       updateLocalStorage(JSON.stringify(res))
@@ -48,6 +46,16 @@ const Login = ({ updateLocalStorage }) => {
     }
   }
 
+  const PromptIfDirty = () => {
+    const formik = useFormikContext();
+    return (
+      <Prompt
+        when={formik.dirty && formik.submitCount === 0}
+        message="Are you sure you want to leave? You have with unsaved changes."
+      />
+    );
+  };
+
   return (
     <div>
       <ToastContainer autoClose={1000} />
@@ -58,8 +66,9 @@ const Login = ({ updateLocalStorage }) => {
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={(values, { setSubmitting, resetForm }) => {
-            handleSubmit(values, resetForm)
+            handleSubmit(values)
             setSubmitting(false)
+            resetForm()
           }}
         >
           {({
@@ -70,7 +79,8 @@ const Login = ({ updateLocalStorage }) => {
             isSubmitting,
             getFieldProps
           }) => (
-            <form onSubmit={handleSubmit} autoComplete="off">
+            <Form onSubmit={handleSubmit} autoComplete="off">
+              <PromptIfDirty />
               <Row>
                 <Col sm={12} md={2}>Email</Col>
                 <Col>
@@ -78,7 +88,7 @@ const Login = ({ updateLocalStorage }) => {
                     name="email"
                     placeholder="Enter Email ID"
                     {...getFieldProps("email")}
-                    onClick={() => { values.email && setModifiedField(true) }}
+                    autoComplete="new-password"
                   />
                   <p className='form-error-msg'>{errors.email && touched.email && errors.email}</p>
                 </Col>
@@ -90,9 +100,8 @@ const Login = ({ updateLocalStorage }) => {
                   <input
                     type="password"
                     name="password"
-                    placeholder="Enter Password"
+                    autoComplete="new-password"
                     {...getFieldProps("password")}
-                    onClick={() => { values.password && setModifiedField(true) }}
                   />
                   <p className='form-error-msg'>{errors.password && touched.password && errors.password}</p>
                 </Col>
@@ -109,11 +118,10 @@ const Login = ({ updateLocalStorage }) => {
                   </Button>
                 </Col>
               </Row>
-            </form>
+            </Form>
           )}
         </Formik>
       </Container>
-      <Prompt when={modifiedField} message={`Are you sure want to exit without Login?!!`} />
     </div>
   )
 }

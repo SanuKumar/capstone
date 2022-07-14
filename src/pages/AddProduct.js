@@ -33,12 +33,16 @@ const AddProduct = ({ fetchProductCallBack }) => {
   }
 
   const handleValidation = () => {
-
+    if (!formData.title || !formData.manufacture || !formData.price || !formData.quantity) {
+      return false
+    }
+    return true
   }
 
   const handleAddProduct = async (e) => {
     e.preventDefault()
-    if (handleValidation) {
+    if (handleValidation()) {
+      setModifiedField(false)
       { formData.thumbnail ? formData.images[0] = formData.thumbnail : formData.images[0] = "https://media.istockphoto.com/vectors/no-image-available-sign-vector-id922962354?k=20&m=922962354&s=612x612&w=0&h=f-9tPXlFXtz9vg_-WonCXKCdBuPUevOBkp3DQ-i0xqo=" }
       let res = await axios.post(`http://localhost:3002/products`, formData)
       if (res.statusText === 'Created') {

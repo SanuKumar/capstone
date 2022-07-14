@@ -38,6 +38,7 @@ const Product = ({ fetchProductCallBack }) => {
 
   const handleUpdateProduct = async (e) => {
     e.preventDefault()
+    { formData.thumbnail ? formData.images[0] = formData.thumbnail : formData.images[0] = "https://media.istockphoto.com/vectors/no-image-available-sign-vector-id922962354?k=20&m=922962354&s=612x612&w=0&h=f-9tPXlFXtz9vg_-WonCXKCdBuPUevOBkp3DQ-i0xqo=" }
     let res = await axios.patch(`http://localhost:3002/products/${formData.id}`, formData)
     if (res.statusText == 'OK') {
       toast.success("Product updated successfully!!", {
@@ -55,7 +56,7 @@ const Product = ({ fetchProductCallBack }) => {
 
   return (
     <>
-      <ToastContainer autoClose={1000}/>
+      <ToastContainer autoClose={1000} />
       <div style={{ float: "right", margin: "-5rem 1rem" }}>
         <Button onClick={() => history.push("/")}>Go Home</Button>
       </div>

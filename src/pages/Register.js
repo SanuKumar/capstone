@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Row, Col, Container, Button } from 'react-bootstrap'
-import { useHistory ,Prompt} from 'react-router-dom'
-import { Formik } from 'formik'
+import { useHistory, Prompt } from 'react-router-dom'
+import { Formik, useFormikContext, Form } from 'formik'
 import * as Yup from "yup"
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -61,6 +61,16 @@ const Register = () => {
     }
   }
 
+  const PromptIfDirty = () => {
+    const formik = useFormikContext();
+    return (
+      <Prompt
+        when={formik.dirty && formik.submitCount === 0}
+        message="Are you sure you want to leave? You have with unsaved changes."
+      />
+    );
+  };
+
 
   return (
     <>
@@ -84,7 +94,8 @@ const Register = () => {
             isSubmitting,
             getFieldProps
           }) => (
-            <form onSubmit={handleSubmit} autoComplete="off">
+            <Form onSubmit={handleSubmit} autoComplete="off">
+              <PromptIfDirty />
               <Row>
                 <Col sm={12} md={2}>Email</Col>
                 <Col>
@@ -92,6 +103,7 @@ const Register = () => {
                     name="email"
                     placeholder="Enter Email ID"
                     {...getFieldProps("email")}
+                    autoComplete="new-password"
                     onClick={() => { values.email && setModifiedField(true) }}
                   />
                   <span className='form-error-msg'>{errors.email && touched.email && errors.email}</span>
@@ -105,6 +117,7 @@ const Register = () => {
                     type="password"
                     placeholder="Enter Password"
                     {...getFieldProps("password")}
+                    autoComplete="new-password"
                     onClick={() => { values.password && setModifiedField(true) }}
                   />
                   <span className='form-error-msg'>{errors.password && touched.password && errors.password}</span>
@@ -117,6 +130,7 @@ const Register = () => {
                   <input
                     name="firstname"
                     {...getFieldProps("firstname")}
+                    autoComplete="new-password"
                     onClick={() => { values.firstname && setModifiedField(true) }}
                   />
                   <span className='form-error-msg'>{errors.firstname && touched.firstname && errors.firstname}</span>
@@ -129,6 +143,7 @@ const Register = () => {
                   <input
                     name="lastname"
                     {...getFieldProps("lastname")}
+                    autoComplete="new-password"
                     onClick={() => { values.lastname && setModifiedField(true) }}
                   />
                   <span className='form-error-msg'>{errors.lastname && touched.lastname && errors.lastname}</span>
@@ -141,6 +156,7 @@ const Register = () => {
                   <input
                     name="location"
                     {...getFieldProps("location")}
+                    autoComplete="new-password"
                     onClick={() => { values.location && setModifiedField(true) }}
                   />
                   <span className='form-error-msg'>{errors.location && touched.location && errors.location}</span>
@@ -154,6 +170,7 @@ const Register = () => {
                     type="phoneNumber"
                     name="phoneNumber"
                     {...getFieldProps("phoneNumber")}
+                    autoComplete="new-password"
                     onClick={() => { values.phoneNumber && setModifiedField(true) }}
                   />
                   <span className='form-error-msg'>{errors.phoneNumber && touched.phoneNumber && errors.phoneNumber}</span>
@@ -169,7 +186,7 @@ const Register = () => {
                   </Button>
                 </Col>
               </Row>
-            </form>
+            </Form>
           )}
         </Formik>
       </Container>
