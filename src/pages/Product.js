@@ -36,19 +36,32 @@ const Product = ({ fetchProductCallBack }) => {
     return new Promise(res => setTimeout(res, time));
   }
 
+  const handleValidation = () => {
+    if (!formData.title || !formData.manufacture || !formData.price || !formData.quantity) {
+      return false
+    }
+    return true
+  }
+
   const handleUpdateProduct = async (e) => {
     e.preventDefault()
-    { formData.thumbnail ? formData.images[0] = formData.thumbnail : formData.images[0] = "https://media.istockphoto.com/vectors/no-image-available-sign-vector-id922962354?k=20&m=922962354&s=612x612&w=0&h=f-9tPXlFXtz9vg_-WonCXKCdBuPUevOBkp3DQ-i0xqo=" }
-    let res = await axios.patch(`http://localhost:3002/products/${formData.id}`, formData)
-    if (res.statusText == 'OK') {
-      toast.success("Product updated successfully!!", {
-        position: toast.POSITION.TOP_CENTER
-      });
-      await timeout(1000);
-      fetchProductCallBack()
-      history.push('/')
+    if (handleValidation()) {
+      formData.thumbnail ? formData.images[0] = formData.thumbnail : formData.images[0] = "https://media.istockphoto.com/vectors/no-image-available-sign-vector-id922962354?k=20&m=922962354&s=612x612&w=0&h=f-9tPXlFXtz9vg_-WonCXKCdBuPUevOBkp3DQ-i0xqo="
+      let res = await axios.patch(`http://localhost:3002/products/${formData.id}`, formData)
+      if (res.statusText == 'OK') {
+        toast.success("Product updated successfully!!", {
+          position: toast.POSITION.TOP_CENTER
+        });
+        await timeout(1000);
+        fetchProductCallBack()
+        history.push('/')
+      } else {
+        toast.error("Error while updating product", {
+          position: toast.POSITION.TOP_CENTER
+        })
+      }
     } else {
-      toast.error("Error while updating product", {
+      toast.error("Please enter product details to add", {
         position: toast.POSITION.TOP_CENTER
       })
     }

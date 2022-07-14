@@ -5,7 +5,9 @@ const About = () => {
   return (
     <>
       <h2 style={{ textAlign: "center", margin: "-4rem 0 2rem 0" }}>About Product Inventory</h2>
+
       <Container>
+        <hr />
         <Row>
           <Col xs={12} sm={6}><Card>
             <Card.Img variant="top" height={400} width={200} src="https://static.vecteezy.com/system/resources/previews/005/441/345/non_2x/inventory-management-with-goods-demand-and-stock-supply-tiny-person-concept-vector.jpg" alt="about" />

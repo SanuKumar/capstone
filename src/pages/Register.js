@@ -9,7 +9,6 @@ import 'react-toastify/dist/ReactToastify.css'
 
 const Register = () => {
   const [registerUser, setRegisterUser] = useState([])
-  const [modifiedField, setModifiedField] = useState(false)
   let history = useHistory()
   let initialData = {
     email: "",
@@ -40,8 +39,8 @@ const Register = () => {
     fetchUser()
   }, [])
 
-  const timeout = () => {
-    return new Promise(res => setTimeout(res, 1000));
+  const timeout = (time) => {
+    return new Promise(res => setTimeout(res, time));
   }
 
   const handleSubmit = async (values) => {
@@ -51,10 +50,16 @@ const Register = () => {
       }
     })
     if (existingUser) {
-      toast.error("User already exists")
+      toast.error("User already exists", {
+        position: toast.POSITION.TOP_CENTER
+      })
     } else {
       let res = await axios.post(`http://localhost:3001/users`, values)
-      if (res.status === 201) {
+      console.log(res)
+      if (res.statusText === 'Created') {
+        toast.success("User register successfully", {
+          position: toast.POSITION.TOP_CENTER
+        });
         await timeout(2000);
         history.push("/login")
       }
@@ -77,6 +82,7 @@ const Register = () => {
       <ToastContainer autoClose={1000} />
       <Container>
         <div><h2>Register User</h2></div>
+        <hr />
         <br />
         <Formik
           initialValues={initialData}
@@ -104,7 +110,6 @@ const Register = () => {
                     placeholder="Enter Email ID"
                     {...getFieldProps("email")}
                     autoComplete="new-password"
-                    onClick={() => { values.email && setModifiedField(true) }}
                   />
                   <span className='form-error-msg'>{errors.email && touched.email && errors.email}</span>
                 </Col>
@@ -118,7 +123,6 @@ const Register = () => {
                     placeholder="Enter Password"
                     {...getFieldProps("password")}
                     autoComplete="new-password"
-                    onClick={() => { values.password && setModifiedField(true) }}
                   />
                   <span className='form-error-msg'>{errors.password && touched.password && errors.password}</span>
                 </Col>
@@ -131,7 +135,6 @@ const Register = () => {
                     name="firstname"
                     {...getFieldProps("firstname")}
                     autoComplete="new-password"
-                    onClick={() => { values.firstname && setModifiedField(true) }}
                   />
                   <span className='form-error-msg'>{errors.firstname && touched.firstname && errors.firstname}</span>
                 </Col>
@@ -144,7 +147,6 @@ const Register = () => {
                     name="lastname"
                     {...getFieldProps("lastname")}
                     autoComplete="new-password"
-                    onClick={() => { values.lastname && setModifiedField(true) }}
                   />
                   <span className='form-error-msg'>{errors.lastname && touched.lastname && errors.lastname}</span>
                 </Col>
@@ -157,7 +159,6 @@ const Register = () => {
                     name="location"
                     {...getFieldProps("location")}
                     autoComplete="new-password"
-                    onClick={() => { values.location && setModifiedField(true) }}
                   />
                   <span className='form-error-msg'>{errors.location && touched.location && errors.location}</span>
                 </Col>
@@ -171,7 +172,6 @@ const Register = () => {
                     name="phoneNumber"
                     {...getFieldProps("phoneNumber")}
                     autoComplete="new-password"
-                    onClick={() => { values.phoneNumber && setModifiedField(true) }}
                   />
                   <span className='form-error-msg'>{errors.phoneNumber && touched.phoneNumber && errors.phoneNumber}</span>
                 </Col>
@@ -190,7 +190,6 @@ const Register = () => {
           )}
         </Formik>
       </Container>
-      <Prompt when={modifiedField} message={`Are you sure want to exit without Registering?!!`} />
     </>
   )
 }

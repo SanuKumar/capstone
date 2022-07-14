@@ -27,6 +27,11 @@ const Login = ({ updateLocalStorage }) => {
     fetchUser()
   }, [])
 
+  const timeout = (time) => {
+    return new Promise(res => setTimeout(res, time));
+  }
+
+
   const handleSubmit = async (values) => {
     let res = usersData.find((user) => {
       if (user.email === values.email && user.password === values.password) {
@@ -34,7 +39,10 @@ const Login = ({ updateLocalStorage }) => {
       }
     })
     if (res) {
-      alert("User Successfully Logged In")
+      toast.success("User successfully logged-in", {
+        position: toast.POSITION.TOP_CENTER
+      });
+      await timeout(2000);
       localStorage.setItem('isUserLoggedIn', JSON.stringify(res))
       updateLocalStorage(JSON.stringify(res))
       history.push('/')
@@ -61,6 +69,7 @@ const Login = ({ updateLocalStorage }) => {
       <ToastContainer autoClose={1000} />
       <Container>
         <div><h2>Login</h2></div>
+        <hr />
         <br />
         <Formik
           initialValues={initialValues}
