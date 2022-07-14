@@ -23,8 +23,8 @@ const ChartPage = ({ products }) => {
 	};
 	return (
 		<>
+			<div style={{ textAlign: "center", marginTop: "-4rem" }}><h2>Top Rated Product</h2></div>
 			<Container>
-				<div><h2>Top Rated Product</h2></div>
 				<Bar data={data} />
 			</Container>
 		</>

@@ -31,12 +31,16 @@ const App = () => {
 
   const fetchProduct = async () => {
     setLoading(true)
-    const { data } = await axios.get(`http://localhost:3002/products`)
-    let reversedData = data.reverse()
-    console.log(reversedData)
-    setLoading(false)
-    setProducts(reversedData)
-    setSearchResult(reversedData)
+    try {
+      const res = await axios.get(`http://localhost:3002/products`)
+      setLoading(false)
+      let reversedData = res.data.reverse()
+      setProducts(reversedData)
+      setSearchResult(reversedData)
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+    }
   }
 
   const updateLocalStorage = (key) => {

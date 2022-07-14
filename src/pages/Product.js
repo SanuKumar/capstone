@@ -55,7 +55,7 @@ const Product = ({ fetchProductCallBack }) => {
 
   return (
     <>
-      <ToastContainer />
+      <ToastContainer autoClose={1000}/>
       <div style={{ float: "right", margin: "-5rem 1rem" }}>
         <Button onClick={() => history.push("/")}>Go Home</Button>
       </div>

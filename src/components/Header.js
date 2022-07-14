@@ -14,7 +14,7 @@ const Header = ({ handleProductSearch, isUserLoggedIn }) => {
             roundedCircle
             style={{ width: '40px' }}
           />
-          <span>{isUserLoggedIn.firstname}</span></> : <span>Login</span>}
+          <span style={{ color: "white" }}>{isUserLoggedIn.firstname}</span></> : <span>Login</span>}
     </>
   )
 
@@ -49,8 +49,8 @@ const Header = ({ handleProductSearch, isUserLoggedIn }) => {
             title={UserMenu}
             id="basic-nav-dropdown"
           >
-            <NavDropdown.Item onClick={() => history.push("/about")}>About <NavDropdown.Divider /></NavDropdown.Item>
-            <NavDropdown.Item onClick={() => history.push('/register')}>Register</NavDropdown.Item>
+            <NavDropdown.Item onClick={() => history.push("/about")}>About</NavDropdown.Item>
+            <NavDropdown.Item onClick={() => history.push('/register')}>Register <NavDropdown.Divider /></NavDropdown.Item>
             {isUserLoggedIn
               ? <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
               : <NavDropdown.Item onClick={() => history.push('/login')}>Login</NavDropdown.Item>

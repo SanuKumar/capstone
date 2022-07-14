@@ -6,6 +6,23 @@ input {
   margin-right: 1rem;
 }
 
+.button-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-wrapper {
+  margin: 0.2rem;
+}
+
+.form-wrapper {
+  font-size: 15px;
+}
+
+.container-wrapper {
+  margin-top: -4rem;
+}
+
 /* .row>*:last-child {
   background: #ff0000;
 } */

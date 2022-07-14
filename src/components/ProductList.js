@@ -48,15 +48,17 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
   const handleDeleteProduct = async (id) => {
     if (isUserLoggedIn) {
       if (window.confirm("Are you sure want to delete product")) {
-        let res = await axios.delete(`http://localhost:3002/products/${id}`)
-        if (res.status === 200) {
-          toast.success("Product deleted successfully!!", {
-            position: toast.POSITION.TOP_CENTER
-          });
-          await timeout(500);
-          fetchProductCallBack()
-        } else {
-          toast.success("Error while deleting product", {
+        try {
+          let res = await axios.delete(`http://localhost:3002/products/${id}`)
+          if (res.status === 200) {
+            toast.success("Product deleted successfully!!", {
+              position: toast.POSITION.TOP_CENTER
+            });
+            await timeout(500);
+            fetchProductCallBack()
+          }
+        } catch (error) {
+          toast.error("Error while deleting product", {
             position: toast.POSITION.TOP_CENTER
           });
         }
@@ -88,12 +90,12 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
 
   return (
     <>
-      <ToastContainer />
-      <Container>
-        <Row style={{ marginTop: '-4rem' }}>
+      <ToastContainer autoClose={1000} />
+      <Container className='container-wrapper'>
+        <Row>
           <Col xs={10} sm={8} >
             <h2>Customise Product Fields</h2>
-            <form style={{ fontSize: "20px" }}>
+            <form className='form-wrapper'>
               <label>Title</label>
               <input
                 type="checkbox"
@@ -129,7 +131,6 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
           </Col>
         </Row>
       </Container>
-
       <br />
       {
         loading ?
@@ -139,21 +140,42 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
               {products.length ? products.map((p) => {
                 return (
                   <Col xs={12} sm={6} md={6} lg={3} key={p.id}>
-                    <Card key={p.id} style={{ margin: '0.2rem' }}>
-                      <Card.Img variant="top" onError={({ currentTarget }) => {
-                        currentTarget.onerror = null; // prevents looping
-                        currentTarget.src = "https://media.istockphoto.com/vectors/no-image-available-sign-vector-id922962354?k=20&m=922962354&s=612x612&w=0&h=f-9tPXlFXtz9vg_-WonCXKCdBuPUevOBkp3DQ-i0xqo=";
-                      }} src={p.thumbnail} height={250} width={250} style={{ padding: "0.3rem" }} onClick={() => handleViewProduct(p.id)} />
+                    <Card key={p.id} className="card-wrapper">
+                      <Card.Img
+                        variant="top"
+                        onError={({ currentTarget }) => {
+                          currentTarget.onerror = null; // prevents looping
+                          currentTarget.src = "https://media.istockphoto.com/vectors/no-image-available-sign-vector-id922962354?k=20&m=922962354&s=612x612&w=0&h=f-9tPXlFXtz9vg_-WonCXKCdBuPUevOBkp3DQ-i0xqo=";
+                        }}
+                        src={p.thumbnail}
+                        height={250}
+                        width={250}
+                        style={{ padding: "0.3rem" }}
+                        onClick={() => handleViewProduct(p.id)}
+                      />
                       <Card.Body>
-                        {customField.title && <Card.Title className='card-text-formatter'>{p.title}</Card.Title>}
-                        {customField.manufacture && <Card.Title className='card-text-formatter'>{p.manufacture}</Card.Title>}
-                        {customField.rating && <Card.Title className='card-text-formatter'><ReactStars edit={false} size={25} value={p.rating} /></Card.Title>}
-                        {customField.description && <Card.Text className='card-text-formatter'>
-                          {p.description}
-                        </Card.Text>
+                        {customField.title &&
+                          <Card.Title className='card-text-formatter'>
+                            {p.title}
+                          </Card.Title>}
+                        {customField.manufacture &&
+                          <Card.Title className='card-text-formatter'>
+                            {p.manufacture}
+                          </Card.Title>}
+                        {customField.rating &&
+                          <Card.Title className='card-text-formatter'>
+                            <ReactStars
+                              edit={false}
+                              size={25}
+                              value={p.rating}
+                            />
+                          </Card.Title>}
+                        {customField.description &&
+                          <Card.Text className='card-text-formatter'>
+                            {p.description}
+                          </Card.Text>
                         }
-                        <div style={{ display: "flex", justifyContent: "space-between" }}>
-
+                        <div className='button-wrapper'>
                           <Button variant="primary" onClick={() => handleEditProduct(p.id)}>Edit</Button>
                           <Button variant="danger" onClick={() => handleDeleteProduct(p.id)}>Delete</Button>
                         </div>
