@@ -5,42 +5,59 @@ import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-const AddProduct = () => {
+const AddProduct = ({ fetchProductCallBack }) => {
   let history = useHistory();
   let initialValue = {
     title: "",
     description: "",
     manufacture: "",
+    category: "",
     price: "",
+    rating: 3,
     quantity: "",
-    thumbnail: ""
+    thumbnail: "",
+    images: []
   }
   const [formData, setFormData] = useState(initialValue)
   const [modifiedField, setModifiedField] = useState(false)
 
   const handleChange = (e) => {
-    setModifiedField(true)
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     })
   }
 
-  const timeout = () => {
-    return new Promise(res => setTimeout(res, 1000));
+  const timeout = (time) => {
+    return new Promise(res => setTimeout(res, time));
   }
 
-  const handleSubmit = async (e) => {
+  const handleValidation = () => {
+
+  }
+
+  const handleAddProduct = async (e) => {
     e.preventDefault()
-    let res = await axios.post(`http://localhost:3002/products`, formData)
-    console.log(res)
-    if (res.status === 201) {
-      setFormData(initialValue)
-      toast.success("Product Created Successfully", {
+    if (handleValidation) {
+      { formData.thumbnail ? formData.images[0] = formData.thumbnail : formData.images[0] = "https://media.istockphoto.com/vectors/no-image-available-sign-vector-id922962354?k=20&m=922962354&s=612x612&w=0&h=f-9tPXlFXtz9vg_-WonCXKCdBuPUevOBkp3DQ-i0xqo=" }
+      let res = await axios.post(`http://localhost:3002/products`, formData)
+      if (res.statusText === 'Created') {
+        setFormData(initialValue)
+        toast.success("Product Created Successfully", {
+          position: toast.POSITION.TOP_CENTER
+        });
+        await timeout(1000);
+        history.push("/")
+        return fetchProductCallBack()
+      } else {
+        toast.error("Error while Adding Product", {
+          position: toast.POSITION.TOP_CENTER
+        })
+      }
+    } else {
+      toast.error("Please enter product details to add", {
         position: toast.POSITION.TOP_CENTER
-      });
-      await timeout(2000);
-      history.push("/")
+      })
     }
   }
 
@@ -77,6 +94,13 @@ const AddProduct = () => {
           </Row>
           <br />
           <Row>
+            <Col xs={12} sm={6}><strong>Category</strong></Col>
+            <Col xs={12} sm={6}>
+              <input type="text" name="category" value={formData.category} onChange={handleChange} />
+            </Col>
+          </Row>
+          <br />
+          <Row>
             <Col xs={12} sm={6}><strong>Price</strong></Col>
             <Col xs={12} sm={6}>
               <input type="number" name="price" value={formData.price} onChange={handleChange} />
@@ -98,7 +122,7 @@ const AddProduct = () => {
           </Row>
           <br />
           <div style={{ marginTop: "2rem" }}>
-            <Button type="submit" onClick={handleSubmit}>Add Product</Button>
+            <Button type="submit" onClick={handleAddProduct}>Add Product</Button>
           </div>
         </form>
       </Container>

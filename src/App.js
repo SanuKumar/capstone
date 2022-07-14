@@ -17,7 +17,7 @@ import PageNotFound from "./pages/PageNotFound.js"
 import { Suspense, lazy } from 'react';
 import Loader from "./components/Loader";
 
-const ProductList = React.lazy(() => import('./components/ProductList'));
+const ProductList = lazy(() => import('./components/ProductList'));
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -26,15 +26,18 @@ const App = () => {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true)
-      const { data } = await axios.get(`http://localhost:3002/products`)
-      setLoading(false)
-      setProducts(data)
-      setSearchResult(data)
-    }
-    fetchData();
+    fetchProduct();
   }, [])
+
+  const fetchProduct = async () => {
+    setLoading(true)
+    const { data } = await axios.get(`http://localhost:3002/products`)
+    let reversedData = data.reverse()
+    console.log(reversedData)
+    setLoading(false)
+    setProducts(reversedData)
+    setSearchResult(reversedData)
+  }
 
   const updateLocalStorage = (key) => {
     setIsUserLoggedIn(key)
@@ -43,6 +46,10 @@ const App = () => {
   useEffect(() => {
     setIsUserLoggedIn(JSON.parse(localStorage.getItem('isUserLoggedIn')))
   }, [])
+
+  const fetchProductCallBack = () => {
+    fetchProduct()
+  }
 
   const handleProductSearch = (searchKey) => {
     if (searchKey) {
@@ -59,13 +66,13 @@ const App = () => {
       <Suspense fallback={<Loader />}>
         <div style={{ margin: "10rem 0 5rem 0" }}>
           <Switch>
-            <Route exact path="/" ><ProductList products={products} loading={loading} isUserLoggedIn={isUserLoggedIn} /></Route>
-            <Route exact path="/product/:id"><Product isUserLoggedIn={isUserLoggedIn} /></Route>
+            <Route exact path="/" ><ProductList products={products} loading={loading} isUserLoggedIn={isUserLoggedIn} fetchProductCallBack={fetchProductCallBack} /></Route>
+            <Route exact path="/product/:id"><Product isUserLoggedIn={isUserLoggedIn} fetchProductCallBack={fetchProductCallBack} /></Route>
             <Route exact path="/login"><Login updateLocalStorage={updateLocalStorage} /></Route>
             <Route exact path="/register"><Register /></Route>
             <Route exact path="/about"><About /></Route>
             <Route exact path="/chart"><ChartPage products={products} /></Route>
-            <Route exact path="/addproduct"><AddProduct /></Route>
+            <Route exact path="/addproduct"><AddProduct fetchProductCallBack={fetchProductCallBack} /></Route>
             <Route path="*" component={PageNotFound} />
           </Switch>
         </div>

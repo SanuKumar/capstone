@@ -3,8 +3,10 @@ import { useParams, useLocation, useHistory } from 'react-router-dom'
 import axios from "axios"
 import { Carousel, Card, Container, Row, Col, Button } from 'react-bootstrap';
 import Loader from "../components/Loader"
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
-const Product = () => {
+const Product = ({ fetchProductCallBack }) => {
   let history = useHistory();
   const location = useLocation();
   const { id } = useParams()
@@ -30,12 +32,30 @@ const Product = () => {
     })
   }
 
-  const handleSubmit = (e) => {
+  const timeout = (time) => {
+    return new Promise(res => setTimeout(res, time));
+  }
+
+  const handleUpdateProduct = async (e) => {
     e.preventDefault()
+    let res = await axios.patch(`http://localhost:3002/products/${formData.id}`, formData)
+    if (res.statusText == 'OK') {
+      toast.success("Product updated successfully!!", {
+        position: toast.POSITION.TOP_CENTER
+      });
+      await timeout(1000);
+      fetchProductCallBack()
+      history.push('/')
+    } else {
+      toast.error("Error while updating product", {
+        position: toast.POSITION.TOP_CENTER
+      })
+    }
   }
 
   return (
     <>
+      <ToastContainer />
       <div style={{ float: "right", margin: "-5rem 1rem" }}>
         <Button onClick={() => history.push("/")}>Go Home</Button>
       </div>
@@ -55,6 +75,10 @@ const Product = () => {
                         alt="First slide"
                         height={400}
                         width={250}
+                        onError={({ currentTarget }) => {
+                          currentTarget.onerror = null; // prevents looping
+                          currentTarget.src = "https://media.istockphoto.com/vectors/no-image-available-sign-vector-id922962354?k=20&m=922962354&s=612x612&w=0&h=f-9tPXlFXtz9vg_-WonCXKCdBuPUevOBkp3DQ-i0xqo=";
+                        }}
                       />
                       <Carousel.Caption>
                         <h4 style={{ color: "Yellow" }}>{productData.brand}</h4>
@@ -109,13 +133,6 @@ const Product = () => {
                     </Col>
                   </Row>
                   <br />
-                  {!location.state?.edit &&
-                    <Row>
-                      <Col xs={12} sm={6}><strong>Rating: </strong></Col>
-                      <Col xs={12} sm={6}>{formData.rating}</Col>
-                    </Row>
-                  }
-                  <br />
                   <Row>
                     <Col xs={12} sm={6}><strong>Price ₹: </strong></Col>
                     <Col xs={12} sm={6}>
@@ -126,7 +143,7 @@ const Product = () => {
                   </Row>
                   <br />
                   <Row>
-                    <Col xs={12} sm={6}><strong>Quantity</strong></Col>
+                    <Col xs={12} sm={6}><strong>Quantity:</strong></Col>
                     <Col xs={12} sm={6}>
                       {location.state?.edit ?
                         <input type="number" name="quantity" value={formData.quantity} onChange={handleChange} /> :
@@ -134,9 +151,28 @@ const Product = () => {
                     </Col>
                   </Row>
                   <br />
+                  <Row>
+                    <Col xs={12} sm={6}><strong>Rating:</strong></Col>
+                    <Col xs={12} sm={6}>
+                      {location.state?.edit ?
+                        <input type="number" name="rating" value={formData.rating} onChange={handleChange} /> :
+                        formData.rating}
+                    </Col>
+                  </Row>
+                  <br />
+                  {location.state?.edit &&
+                    <Row>
+                      <Col xs={12} sm={6}><strong>Image URL</strong></Col>
+                      <Col xs={12} sm={6}>
+                        <input type="text" name="thumbnail" value={formData.thumbnail} onChange={handleChange} />
+
+                      </Col>
+                    </Row>
+                  }
+                  <br />
                   {location.state?.edit &&
                     <div style={{ marginTop: "2rem" }}>
-                      <Button type="submit" onClick={handleSubmit}>Update Product</Button>
+                      <Button type="submit" onClick={handleUpdateProduct}>Update Product</Button>
                     </div>
                   }
                 </form>

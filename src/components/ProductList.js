@@ -8,15 +8,20 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import axios from "axios"
 
-const ProductList = ({ products, loading, isUserLoggedIn }) => {
+const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }) => {
   let history = useHistory();
-  const [customField, setCustomField] = useState({ title: true, manufacture: true, rating: true })
+  const [customField, setCustomField] = useState({
+    title: true,
+    manufacture: true,
+    rating: true,
+    description: true
+  })
 
   const handleAddProduct = () => {
     if (isUserLoggedIn) {
       history.push('/addproduct')
     } else {
-      toast.error("Please login to Add Product", {
+      toast.error("Please login to add product", {
         position: toast.POSITION.TOP_CENTER
       })
     }
@@ -30,34 +35,34 @@ const ProductList = ({ products, loading, isUserLoggedIn }) => {
       })
     }
     else {
-      toast.error("Please login to Edit Product", {
+      toast.error("Please login to edit product", {
         position: toast.POSITION.TOP_CENTER
       });
     }
   }
 
-  const timeout = () => {
-    return new Promise(res => setTimeout(res, 1000));
+  const timeout = (time) => {
+    return new Promise(res => setTimeout(res, time));
   }
 
   const handleDeleteProduct = async (id) => {
     if (isUserLoggedIn) {
-      if (window.confirm("Are you sure want to delete Product")) {
+      if (window.confirm("Are you sure want to delete product")) {
         let res = await axios.delete(`http://localhost:3002/products/${id}`)
         if (res.status === 200) {
-          toast.success("Product Deleted Successfully", {
+          toast.success("Product deleted successfully!!", {
             position: toast.POSITION.TOP_CENTER
           });
-          await timeout(2000);
-          window.location.reload();
+          await timeout(500);
+          fetchProductCallBack()
         } else {
-          toast.success("Error while Deleting Product", {
+          toast.success("Error while deleting product", {
             position: toast.POSITION.TOP_CENTER
           });
         }
       }
     } else {
-      toast.error("Please login to Delete Product", {
+      toast.error("Please login to delete product", {
         position: toast.POSITION.TOP_CENTER
       })
     }
@@ -67,7 +72,7 @@ const ProductList = ({ products, loading, isUserLoggedIn }) => {
     if (isUserLoggedIn) {
       history.push(`/product/${id}`)
     } else {
-      toast.error("Please login to View Product Details", {
+      toast.error("Please login to view product details", {
         position: toast.POSITION.TOP_CENTER
       })
     }
@@ -89,25 +94,32 @@ const ProductList = ({ products, loading, isUserLoggedIn }) => {
           <Col xs={10} sm={8} >
             <h2>Customise Product Fields</h2>
             <form style={{ fontSize: "20px" }}>
-              <label>Title</label>{" "}
+              <label>Title</label>
               <input
                 type="checkbox"
                 name="title"
                 checked={customField.title}
                 onChange={onSiteChanged}
-              />{" "}
-              <label>Manufacture</label>{" "}
+              />
+              <label>Manufacture</label>
               <input
                 type="checkbox"
                 name="manufacture"
                 checked={customField.manufacture}
                 onChange={onSiteChanged}
-              />{" "}
-              <label>Rating</label>{" "}
+              />
+              <label>Rating</label>
               <input
                 type="checkbox"
                 name="rating"
                 checked={customField.rating}
+                onChange={onSiteChanged}
+              />
+              <label>Description</label>
+              <input
+                type="checkbox"
+                name="description"
+                checked={customField.description}
                 onChange={onSiteChanged}
               />
             </form>
@@ -136,9 +148,10 @@ const ProductList = ({ products, loading, isUserLoggedIn }) => {
                         {customField.title && <Card.Title className='card-text-formatter'>{p.title}</Card.Title>}
                         {customField.manufacture && <Card.Title className='card-text-formatter'>{p.manufacture}</Card.Title>}
                         {customField.rating && <Card.Title className='card-text-formatter'><ReactStars edit={false} size={25} value={p.rating} /></Card.Title>}
-                        <Card.Text className='card-text-formatter'>
+                        {customField.description && <Card.Text className='card-text-formatter'>
                           {p.description}
                         </Card.Text>
+                        }
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
 
                           <Button variant="primary" onClick={() => handleEditProduct(p.id)}>Edit</Button>
