@@ -11,6 +11,8 @@ import {
 import ChartPage from "./pages/ChartPage";
 import { Suspense, lazy } from 'react';
 import Loader from "./components/Loader";
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const ProductList = lazy(() => import('./components/ProductList'));
 const PageNotFound = lazy(() => import("./pages/PageNotFound.js"));
@@ -38,8 +40,10 @@ const App = () => {
       setProducts(reversedData)
       setSearchResult(reversedData)
     } catch (error) {
-      console.log(error)
       setLoading(false)
+      toast.error("Error while fetching products", {
+        position: toast.POSITION.TOP_CENTER
+      });
     }
   }
 
@@ -62,6 +66,7 @@ const App = () => {
 
   return (
     <>
+      <ToastContainer autoClose={1000} />
       <Header handleProductSearch={handleProductSearch} isUserLoggedIn={isUserLoggedIn} />
       <Suspense fallback={<Loader />}>
         <div style={{ padding: "10rem 0 5rem 0" }}>

@@ -1,6 +1,8 @@
 import React from 'react'
 import { Container, Nav, Navbar, NavDropdown, Form, Image } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import { FiLogIn } from 'react-icons/fi';
+import { BiLogOut } from 'react-icons/bi';
 
 const Header = ({ handleProductSearch, isUserLoggedIn }) => {
   let history = useHistory()
@@ -55,8 +57,8 @@ const Header = ({ handleProductSearch, isUserLoggedIn }) => {
             <NavDropdown.Item onClick={() => history.push("/about")}>About</NavDropdown.Item>
             <NavDropdown.Item onClick={() => history.push('/register')}>Register <NavDropdown.Divider /></NavDropdown.Item>
             {isUserLoggedIn
-              ? <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
-              : <NavDropdown.Item onClick={() => history.push('/login')}>Login</NavDropdown.Item>
+              ? <NavDropdown.Item onClick={handleLogout}>Logout <BiLogOut /></NavDropdown.Item>
+              : <NavDropdown.Item onClick={() => history.push('/login')}>Login <FiLogIn /></NavDropdown.Item>
             }
           </NavDropdown>
         </Navbar.Collapse>

@@ -7,6 +7,9 @@ import ReactStars from "react-rating-stars-component";
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import axios from "axios"
+import { RiDeleteBin6Line } from 'react-icons/ri';
+import { AiOutlineEdit } from 'react-icons/ai';
+import { CgAddR } from 'react-icons/cg';
 
 const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }) => {
   let history = useHistory();
@@ -130,7 +133,7 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
       <ToastContainer autoClose={1000} />
       <Container className='container-wrapper'>
         <Row>
-          <Col>
+          <Col lg={10} md={10} sm={12}>
             <h2>Customise Product Fields</h2>
             <form className='form-wrapper'>
               <label>Product Name</label>
@@ -163,13 +166,21 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
               />
             </form>
           </Col>
-          {delMulProduct.length > 1 &&
-            <Col>
-              <Button variant="danger" onClick={deleteMultipleProducts}>Delete Multiple Products</Button>
-            </Col>
-          }
           <Col>
-            <Button onClick={handleAddProduct} style={{ float: "right" }}>Add Product</Button>
+            <Row>
+              <Col className='m-1'>
+                <div style={{ margin: "2px", width: "10.5rem" }}>
+                  {delMulProduct.length > 1 &&
+                    <Button variant="danger" onClick={deleteMultipleProducts}>Delete Product's <RiDeleteBin6Line /></Button>
+                  }
+                </div>
+              </Col>
+              <Col className='m-1'>
+                <div style={{ margin: "2px", width: "9rem" }}>
+                  <Button onClick={handleAddProduct}>Add Product <CgAddR /></Button>
+                </div>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Container>
@@ -210,12 +221,13 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
                         onClick={() => handleViewProduct(p.id)}
                       />
                       <Card.Body>
-                        <input
-                          type="checkbox"
-                          name="delete"
-                          onChange={() => selectMultipleProduct(p.id)}
-                          style={{ float: "right" }}
-                        />
+                        <div style={{ float: "right", marginLeft: "4px" }}>
+                          <input
+                            type="checkbox"
+                            name="delete"
+                            onChange={() => selectMultipleProduct(p.id)}
+                          />
+                        </div>
                         {customField.name &&
                           <Card.Title className='card-text-formatter'>
                             {p.name}
@@ -238,8 +250,8 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
                           </Card.Text>
                         }
                         <div className='button-wrapper'>
-                          <Button variant="primary" onClick={() => handleEditProduct(p.id)}>Edit</Button>
-                          <Button variant="danger" onClick={() => handleShow(p.id)}>Delete</Button>
+                          <Button variant="primary" onClick={() => handleEditProduct(p.id)}>Edit <AiOutlineEdit /></Button>
+                          <Button variant="danger" onClick={() => handleShow(p.id)}>Delete <RiDeleteBin6Line /></Button>
                         </div>
                       </Card.Body>
                     </Card>
