@@ -27,8 +27,7 @@ const Register = () => {
     firstname: Yup.string().required("firstname is required"),
     lastname: Yup.string().required("lastname is required"),
     location: Yup.string(),
-    phoneNumber: Yup.string().matches(phoneRegExp, 'Phone number is not valid').min(10, "to short")
-      .max(10, "to long"),
+    phoneNumber: Yup.string().matches(phoneRegExp, 'Phone number is not valid').min(10, "to short").max(10, "to long"),
   })
 
   const fetchUser = async () => {
@@ -55,7 +54,6 @@ const Register = () => {
       })
     } else {
       let res = await axios.post(`http://localhost:3001/users`, values)
-      console.log(res)
       if (res.statusText === 'Created') {
         toast.success("User register successfully", {
           position: toast.POSITION.TOP_CENTER
@@ -165,7 +163,7 @@ const Register = () => {
               </Row>
               <br />
               <Row>
-                <Col sm={12} md={2}>Mobile phoneNumber</Col>
+                <Col sm={12} md={2}>Mobile Number</Col>
                 <Col>
                   <input
                     type="phoneNumber"
@@ -182,7 +180,8 @@ const Register = () => {
                 <Col>
                   <Button
                     type='submit'
-                    disabled={isSubmitting}>Register
+                    disabled={isSubmitting}
+                  >Register
                   </Button>
                 </Col>
               </Row>

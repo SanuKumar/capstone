@@ -242,7 +242,7 @@
     },
     {
       "id": 15,
-      "title": "Perfume Spray",
+      "title": "Eau De Perfume Spray",
       "description": "Genuine  Al-Rehab spray perfume from UAE/Saudi Arabia/Yemen High Quality",
       "price": 30,
       "rating": 4,
@@ -251,7 +251,7 @@
       "category": "fragrances",
       "thumbnail": "https://dummyjson.com/image/i/products/15/thumbnail.jpg",
       "images": [
-        "https://dummyjson.com/image/i/products/15/thumbnail.jpg",
+        "https://dummyjson.com/image/i/products/15/1.jpg",
         "https://dummyjson.com/image/i/products/15/2.jpg",
         "https://dummyjson.com/image/i/products/15/3.jpg",
         "https://dummyjson.com/image/i/products/15/4.jpg",
@@ -330,8 +330,8 @@
     },
     {
       "id": 20,
-      "title": "Freckle Cream",
-      "description": "Fair & Clear is cream which helps fade Freckles, Darkspots and pigments. Mercury level is 0%, so there are no side effects.",
+      "title": "Freckle Treatment Cream- 15gm",
+      "description": "Fair & Clear is Pakistan's only pure Freckle cream which helpsfade Freckles, Darkspots and pigments. Mercury level is 0%, so there are no side effects.",
       "price": 70,
       "rating": 4,
       "quantity": 140,
@@ -339,7 +339,7 @@
       "category": "skincare",
       "thumbnail": "https://dummyjson.com/image/i/products/20/thumbnail.jpg",
       "images": [
-        "https://dummyjson.com/image/i/products/20/thumbnail.jpg",
+        "https://dummyjson.com/image/i/products/20/1.jpg",
         "https://dummyjson.com/image/i/products/20/2.jpg",
         "https://dummyjson.com/image/i/products/20/3.jpg",
         "https://dummyjson.com/image/i/products/20/4.jpg",

@@ -1,21 +1,25 @@
 import React from 'react'
 import { Bar } from "react-chartjs-2";
 import Chart from 'chart.js/auto';
-import { Container } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
 const ChartPage = ({ products }) => {
+	let topProducts = products && products.filter((p) => {
+		if (p.rating > 3)
+			return p
+	})
 	const data = {
-		labels: products.map((product) => product.title),
+		labels: topProducts && topProducts.map((product) => product.title),
 		datasets: [
 			{
 				label: "Price",
-				data: products.map((product) => product.quantity),
+				data: topProducts && topProducts.map((product) => product.quantity),
 				fill: true,
 				backgroundColor: "rgb(255, 99, 132)"
 			},
 			{
 				label: "Rating",
-				data: products.map((product) => product.rating),
+				data: topProducts && topProducts.map((product) => product.rating),
 				fill: false,
 				backgroundColor: "rgb(54, 162, 235)"
 			}
@@ -23,9 +27,14 @@ const ChartPage = ({ products }) => {
 	};
 	return (
 		<>
-			<div style={{ textAlign: "center", marginTop: "-4rem" }}><h2>Top Rated Product</h2></div>
+			<div style={{ textAlign: "center", marginTop: "-4rem" }}><h2>Top Rated Product Above 3 Stars</h2></div>
 			<Container>
-				<Bar data={data} />
+				<Row>
+					<Col xs={12} sm={12} md={8} lg={10}>
+						<Bar data={data} />
+					</Col>
+					<Col></Col>
+				</Row>
 			</Container>
 		</>
 	)

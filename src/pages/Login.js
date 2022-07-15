@@ -44,7 +44,6 @@ const Login = ({ updateLocalStorage }) => {
       });
       await timeout(2000);
       localStorage.setItem('isUserLoggedIn', JSON.stringify(res))
-      updateLocalStorage(JSON.stringify(res))
       history.push('/')
       window.location.reload();
     } else {
@@ -77,7 +76,6 @@ const Login = ({ updateLocalStorage }) => {
           onSubmit={(values, { setSubmitting, resetForm }) => {
             handleSubmit(values)
             setSubmitting(false)
-            resetForm()
           }}
         >
           {({

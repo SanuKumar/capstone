@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Container, Card, Button, Row, Col } from 'react-bootstrap';
+import { Container, Card, Button, Row, Col, Modal } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import Loader from './Loader';
 import "./ProductList.css"
@@ -10,6 +10,9 @@ import axios from "axios"
 
 const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }) => {
   let history = useHistory();
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const [selectedId, setSelectedId] = useState("")
   const [customField, setCustomField] = useState({
     title: true,
     manufacture: true,
@@ -45,30 +48,6 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
     return new Promise(res => setTimeout(res, time));
   }
 
-  const handleDeleteProduct = async (id) => {
-    if (isUserLoggedIn) {
-      if (window.confirm("Are you sure want to delete product")) {
-        try {
-          let res = await axios.delete(`http://localhost:3002/products/${id}`)
-          if (res.status === 200) {
-            toast.success("Product deleted successfully!!", {
-              position: toast.POSITION.TOP_CENTER
-            });
-            await timeout(500);
-            fetchProductCallBack()
-          }
-        } catch (error) {
-          toast.error("Error while deleting product", {
-            position: toast.POSITION.TOP_CENTER
-          });
-        }
-      }
-    } else {
-      toast.error("Please login to delete product", {
-        position: toast.POSITION.TOP_CENTER
-      })
-    }
-  }
 
   const handleViewProduct = (id) => {
     if (isUserLoggedIn) {
@@ -86,6 +65,34 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
       ...customField,
       [name]: checked ? true : false
     })
+  }
+  const handleShow = (id) => {
+    if (isUserLoggedIn) {
+      setShow(true)
+      setSelectedId(id)
+    } else {
+      toast.error("Please login to delete product", {
+        position: toast.POSITION.TOP_CENTER
+      })
+    }
+  };
+
+  const handleDeleteProduct = async () => {
+    setShow(false)
+    try {
+      let res = await axios.delete(`http://localhost:3002/products/${selectedId}`)
+      if (res.status === 200) {
+        toast.success("Product deleted successfully!!", {
+          position: toast.POSITION.TOP_CENTER
+        });
+        await timeout(500);
+        fetchProductCallBack()
+      }
+    } catch (error) {
+      toast.error("Error while deleting product", {
+        position: toast.POSITION.TOP_CENTER
+      });
+    }
   }
 
   return (
@@ -131,13 +138,27 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
           </Col>
         </Row>
       </Container>
+      <Modal show={show} onHide={handleClose} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Product</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, Are you sure want to delete the Product!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={() => handleDeleteProduct()}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <br />
       {
         loading ?
           <Loader /> :
           <Container>
             <Row className="justify-content-md-center">
-              {products.length ? products.map((p) => {
+              {products ? products.map((p) => {
                 return (
                   <Col xs={12} sm={6} md={6} lg={3} key={p.id}>
                     <Card key={p.id} className="card-wrapper">
@@ -167,7 +188,7 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
                             <ReactStars
                               edit={false}
                               size={25}
-                              value={p.rating}
+                              value={parseInt(p.rating)}
                             />
                           </Card.Title>}
                         {customField.description &&
@@ -177,7 +198,7 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
                         }
                         <div className='button-wrapper'>
                           <Button variant="primary" onClick={() => handleEditProduct(p.id)}>Edit</Button>
-                          <Button variant="danger" onClick={() => handleDeleteProduct(p.id)}>Delete</Button>
+                          <Button variant="danger" onClick={() => handleShow(p.id)}>Delete</Button>
                         </div>
                       </Card.Body>
                     </Card>
@@ -188,7 +209,6 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
           </Container >
       }
     </>
-
   )
 }
 

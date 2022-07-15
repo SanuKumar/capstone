@@ -14,7 +14,10 @@ const Header = ({ handleProductSearch, isUserLoggedIn }) => {
             roundedCircle
             style={{ width: '40px' }}
           />
-          <span style={{ color: "white" }}>{isUserLoggedIn.firstname}</span></> : <span>Login</span>}
+          <span style={{ color: "white" }}>
+            {isUserLoggedIn.firstname}
+          </span>
+        </> : <span style={{ color: "white" }}>Login/Register</span>}
     </>
   )
 
@@ -32,7 +35,7 @@ const Header = ({ handleProductSearch, isUserLoggedIn }) => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link onClick={() => history.push("/about")}>About</Nav.Link>
-            <Nav.Link onClick={() => history.push("/chart")}>Product Chart</Nav.Link>
+            <Nav.Link onClick={() => history.push("/chart")} style={{ marginRight: "2rem" }}>Product's Chart</Nav.Link>
             <Form className="d-flex">
               <Form.Control
                 type="search"

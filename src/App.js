@@ -43,10 +43,6 @@ const App = () => {
     }
   }
 
-  const updateLocalStorage = (key) => {
-    setIsUserLoggedIn(key)
-  }
-
   useEffect(() => {
     setIsUserLoggedIn(JSON.parse(localStorage.getItem('isUserLoggedIn')))
   }, [])
@@ -68,11 +64,11 @@ const App = () => {
     <>
       <Header handleProductSearch={handleProductSearch} isUserLoggedIn={isUserLoggedIn} />
       <Suspense fallback={<Loader />}>
-        <div style={{ margin: "10rem 0 5rem 0" }}>
+        <div style={{ padding: "10rem 0 5rem 0" }}>
           <Switch>
             <Route exact path="/" ><ProductList products={products} loading={loading} isUserLoggedIn={isUserLoggedIn} fetchProductCallBack={fetchProductCallBack} /></Route>
             <Route exact path="/product/:id"><Product isUserLoggedIn={isUserLoggedIn} fetchProductCallBack={fetchProductCallBack} /></Route>
-            <Route exact path="/login"><Login updateLocalStorage={updateLocalStorage} /></Route>
+            <Route exact path="/login"><Login /></Route>
             <Route exact path="/register"><Register /></Route>
             <Route exact path="/about"><About /></Route>
             <Route exact path="/chart"><ChartPage products={products} /></Route>
