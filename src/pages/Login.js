@@ -47,7 +47,7 @@ const Login = ({ updateLocalStorage }) => {
       history.push('/')
       window.location.reload();
     } else {
-      toast.error("Enter credential is incorrect", {
+      toast.error("User is not registered", {
         position: toast.POSITION.TOP_CENTER
       })
     }

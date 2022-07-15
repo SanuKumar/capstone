@@ -13,7 +13,7 @@ const Product = ({ fetchProductCallBack }) => {
   const location = useLocation();
   const { id } = useParams()
   const initialValues = {
-    title: "",
+    name: "",
     description: "",
     price: "",
     discountPercentage: "",
@@ -43,7 +43,7 @@ const Product = ({ fetchProductCallBack }) => {
   }
 
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required('Please enter product title'),
+    name: Yup.string().required('Please enter product name'),
     description: Yup.string().required("Description is required"),
     price: Yup.string().required("Price is required"),
     rating: Yup.string().required("Rating is required"),
@@ -115,7 +115,7 @@ const Product = ({ fetchProductCallBack }) => {
                   ))}
                 </Carousel>
                 <Card.Body>
-                  <Card.Title>{productData.title}</Card.Title>
+                  <Card.Title>{productData.name}</Card.Title>
                   <Card.Text>
                     {productData.description}
                   </Card.Text>
@@ -143,48 +143,18 @@ const Product = ({ fetchProductCallBack }) => {
                     <Form onSubmit={handleSubmit} autoComplete="off">
                       <PromptIfDirty />
                       <Row>
-                        <Col xs={12} sm={6}><strong>Manufacture: </strong></Col>
+                        <Col xs={12} sm={6}><strong>Product Name: </strong></Col>
                         <Col xs={12} sm={6}>
                           {location.state?.edit ?
                             <>
                               <input
-                                name="manufacture"
-                                {...getFieldProps("manufacture")}
+                                name="name"
+                                {...getFieldProps("name")}
                               />
-                              <span className='form-error-msg'>{errors.manufacture && touched.manufacture && errors.manufacture}</span>
-                            </> :
-                            values.manufacture}
-                        </Col>
-                      </Row>
-                      <br />
-                      <Row>
-                        <Col xs={12} sm={6}><strong>Category:</strong></Col>
-                        <Col xs={12} sm={6}>
-                          {location.state?.edit ?
-                            <>
-                              <input
-                                name="category"
-                                {...getFieldProps("category")}
-                              />
-                              <span className='form-error-msg'>{errors.category && touched.category && errors.category}</span>
-                            </> :
-                            values.category}
-                        </Col>
-                      </Row>
-                      <br />
-                      <Row>
-                        <Col xs={12} sm={6}><strong>Title: </strong></Col>
-                        <Col xs={12} sm={6}>
-                          {location.state?.edit ?
-                            <>
-                              <input
-                                name="title"
-                                {...getFieldProps("title")}
-                              />
-                              <span className='form-error-msg'>{errors.title && touched.title && errors.title}</span>
+                              <span className='form-error-msg'>{errors.name && touched.name && errors.name}</span>
                             </>
                             :
-                            values.title}
+                            values.name}
                         </Col>
                       </Row>
                       <br />
@@ -201,6 +171,21 @@ const Product = ({ fetchProductCallBack }) => {
                             </>
                             :
                             values.description}
+                        </Col>
+                      </Row>
+                      <br />
+                      <Row>
+                        <Col xs={12} sm={6}><strong>Manufacture: </strong></Col>
+                        <Col xs={12} sm={6}>
+                          {location.state?.edit ?
+                            <>
+                              <input
+                                name="manufacture"
+                                {...getFieldProps("manufacture")}
+                              />
+                              <span className='form-error-msg'>{errors.manufacture && touched.manufacture && errors.manufacture}</span>
+                            </> :
+                            values.manufacture}
                         </Col>
                       </Row>
                       <br />
@@ -229,6 +214,21 @@ const Product = ({ fetchProductCallBack }) => {
                             <span className='form-error-msg'>{errors.quantity && touched.quantity && errors.quantity}</span>
                           </> :
                             values.quantity}
+                        </Col>
+                      </Row>
+                      <br />
+                      <Row>
+                        <Col xs={12} sm={6}><strong>Category:</strong></Col>
+                        <Col xs={12} sm={6}>
+                          {location.state?.edit ?
+                            <>
+                              <input
+                                name="category"
+                                {...getFieldProps("category")}
+                              />
+                              <span className='form-error-msg'>{errors.category && touched.category && errors.category}</span>
+                            </> :
+                            values.category}
                         </Col>
                       </Row>
                       <br />

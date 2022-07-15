@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css'
 const AddProduct = ({ fetchProductCallBack }) => {
   let history = useHistory();
   let initialValue = {
-    title: "",
+    name: "",
     description: "",
     manufacture: "",
     category: "",
@@ -24,7 +24,7 @@ const AddProduct = ({ fetchProductCallBack }) => {
   const numberCheck = /^(0*[1-9][0-9]*(\.[0-9]*)?|0*\.[0-9]*[1-9][0-9]*)$/;
 
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required('Please enter product title'),
+    name: Yup.string().required('Please enter product name'),
     description: Yup.string().required("Description is required"),
     price: Yup.string().required("Price is required").matches(numberCheck, 'Price is not valid'),
     rating: Yup.string().required("Rating is required").matches(numberCheck, 'Rating is not valid').min(1, "to short").max(1, "to long"),
@@ -102,10 +102,10 @@ const AddProduct = ({ fetchProductCallBack }) => {
                 <Col xs={12} sm={6}><strong>Product Name: </strong></Col>
                 <Col xs={12} sm={6}>
                   <input
-                    name="title"
-                    {...getFieldProps("title")}
+                    name="name"
+                    {...getFieldProps("name")}
                   />
-                  <span className='form-error-msg'>{errors.title && touched.title && errors.title}</span>
+                  <span className='form-error-msg'>{errors.name && touched.name && errors.name}</span>
                 </Col>
               </Row>
               <br />
@@ -132,17 +132,6 @@ const AddProduct = ({ fetchProductCallBack }) => {
               </Row>
               <br />
               <Row>
-                <Col xs={12} sm={6}><strong>Category</strong></Col>
-                <Col xs={12} sm={6}>
-                  <input
-                    name="category"
-                    {...getFieldProps("category")}
-                  />
-                  <span className='form-error-msg'>{errors.category && touched.category && errors.category}</span>
-                </Col>
-              </Row>
-              <br />
-              <Row>
                 <Col xs={12} sm={6}><strong>Price</strong></Col>
                 <Col xs={12} sm={6}>
                   <input
@@ -161,6 +150,17 @@ const AddProduct = ({ fetchProductCallBack }) => {
                     {...getFieldProps("quantity")}
                   />
                   <span className='form-error-msg'>{errors.quantity && touched.quantity && errors.quantity}</span>
+                </Col>
+              </Row>
+              <br />
+              <Row>
+                <Col xs={12} sm={6}><strong>Category</strong></Col>
+                <Col xs={12} sm={6}>
+                  <input
+                    name="category"
+                    {...getFieldProps("category")}
+                  />
+                  <span className='form-error-msg'>{errors.category && touched.category && errors.category}</span>
                 </Col>
               </Row>
               <br />

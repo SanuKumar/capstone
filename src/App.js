@@ -8,16 +8,16 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import About from "./pages/About";
 import ChartPage from "./pages/ChartPage";
-import AddProduct from "./pages/AddProduct";
-import PageNotFound from "./pages/PageNotFound.js"
 import { Suspense, lazy } from 'react';
 import Loader from "./components/Loader";
 
 const ProductList = lazy(() => import('./components/ProductList'));
+const PageNotFound = lazy(() => import("./pages/PageNotFound.js"));
+const AddProduct = lazy(() => import("./pages/AddProduct"))
+const Login = lazy(() => import("./pages/Login"))
+const Register = lazy(() => import("./pages/Register"))
+const About = lazy(() => import("./pages/About"))
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -53,7 +53,7 @@ const App = () => {
 
   const handleProductSearch = (searchKey) => {
     if (searchKey) {
-      let filterProduct = searchResult.filter((product) => product.title.toLowerCase().includes(searchKey.toLowerCase()));
+      let filterProduct = searchResult.filter((product) => product.name.toLowerCase().includes(searchKey.toLowerCase()));
       setProducts(filterProduct)
     } else {
       setProducts(searchResult)

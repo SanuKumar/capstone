@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Container, Nav, Navbar, NavDropdown, Form, Image } from 'react-bootstrap';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const Header = ({ handleProductSearch, isUserLoggedIn }) => {
   let history = useHistory()

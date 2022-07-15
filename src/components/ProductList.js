@@ -14,7 +14,7 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
   const handleClose = () => setShow(false);
   const [selectedId, setSelectedId] = useState("")
   const [customField, setCustomField] = useState({
-    title: true,
+    name: true,
     manufacture: true,
     rating: true,
     description: true
@@ -95,20 +95,31 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
     }
   }
 
+  const [delMulProduct, setDelMulProduct] = useState([])
+
+  const handleMultipleProduct = (id) => {
+    if (delMulProduct.includes(id)) {
+      let remove = delMulProduct.filter((p) => p != id)
+      return setDelMulProduct(remove)
+    }
+    setDelMulProduct([...delMulProduct, id])
+  }
+
+  console.log("delMulProduct", delMulProduct)
 
   return (
     <>
       <ToastContainer autoClose={1000} />
       <Container className='container-wrapper'>
         <Row>
-          <Col xs={10} sm={8} >
+          <Col>
             <h2>Customise Product Fields</h2>
             <form className='form-wrapper'>
-              <label>Title</label>
+              <label>Product Name</label>
               <input
                 type="checkbox"
-                name="title"
-                checked={customField.title}
+                name="name"
+                checked={customField.name}
                 onChange={onSiteChanged}
               />
               <label>Manufacture</label>
@@ -134,6 +145,11 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
               />
             </form>
           </Col>
+          {delMulProduct.length > 0 &&
+            <Col>
+              <Button>pro</Button>
+            </Col>
+          }
           <Col xs={18} sm={4}>
             <Button onClick={handleAddProduct} style={{ float: "right" }}>Add Product</Button>
           </Col>
@@ -176,9 +192,16 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
                         onClick={() => handleViewProduct(p.id)}
                       />
                       <Card.Body>
-                        {customField.title &&
+                        <input
+                          type="checkbox"
+                          name="delete"
+                          // checked={customField.description}
+                          onChange={() => handleMultipleProduct(p.id)}
+                          style={{ float: "right" }}
+                        />
+                        {customField.name &&
                           <Card.Title className='card-text-formatter'>
-                            {p.title}
+                            {p.name}
                           </Card.Title>}
                         {customField.manufacture &&
                           <Card.Title className='card-text-formatter'>

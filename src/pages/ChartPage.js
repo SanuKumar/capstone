@@ -9,7 +9,7 @@ const ChartPage = ({ products }) => {
 			return p
 	})
 	const data = {
-		labels: topProducts && topProducts.map((product) => product.title),
+		labels: topProducts && topProducts.map((product) => product.name),
 		datasets: [
 			{
 				label: "Price",
