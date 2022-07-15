@@ -10,6 +10,7 @@ import axios from "axios"
 
 const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }) => {
   let history = useHistory();
+  const [delMulProduct, setDelMulProduct] = useState([])
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const [selectedId, setSelectedId] = useState("")
@@ -95,9 +96,7 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
     }
   }
 
-  const [delMulProduct, setDelMulProduct] = useState([])
-
-  const handleMultipleProduct = (id) => {
+  const selectMultipleProduct = (id) => {
     if (delMulProduct.includes(id)) {
       let remove = delMulProduct.filter((p) => p != id)
       return setDelMulProduct(remove)
@@ -105,7 +104,26 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
     setDelMulProduct([...delMulProduct, id])
   }
 
-  console.log("delMulProduct", delMulProduct)
+  const deleteMultipleProducts = async () => {
+    if (window.confirm('Are you sure want to delete selected products')) {
+      try {
+        delMulProduct.map((did) => {
+          axios.delete(`http://localhost:3002/products/${did}`)
+        })
+        toast.success("Product's deleted successfully!!", {
+          position: toast.POSITION.TOP_CENTER
+        });
+        await timeout(500);
+        fetchProductCallBack()
+        setDelMulProduct([])
+      } catch (error) {
+        toast.error("Error while deleting product", {
+          position: toast.POSITION.TOP_CENTER
+        });
+      }
+    }
+  }
+
 
   return (
     <>
@@ -145,12 +163,12 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
               />
             </form>
           </Col>
-          {delMulProduct.length > 0 &&
+          {delMulProduct.length > 1 &&
             <Col>
-              <Button>pro</Button>
+              <Button variant="danger" onClick={deleteMultipleProducts}>Delete Multiple Products</Button>
             </Col>
           }
-          <Col xs={18} sm={4}>
+          <Col>
             <Button onClick={handleAddProduct} style={{ float: "right" }}>Add Product</Button>
           </Col>
         </Row>
@@ -164,7 +182,7 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleDeleteProduct()}>
+          <Button variant="primary" onClick={handleDeleteProduct}>
             Delete
           </Button>
         </Modal.Footer>
@@ -195,8 +213,7 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
                         <input
                           type="checkbox"
                           name="delete"
-                          // checked={customField.description}
-                          onChange={() => handleMultipleProduct(p.id)}
+                          onChange={() => selectMultipleProduct(p.id)}
                           style={{ float: "right" }}
                         />
                         {customField.name &&
