@@ -96,8 +96,8 @@ const Product = ({ fetchProductCallBack }) => {
               <Card>
                 <Carousel variant="dark" indicators controls>
                   {productData?.images && productData.images.map((p) => (
-                    <Carousel.Item key={p}>
-                      <img
+                    <Carousel.Item interval={1000} key={p}>
+                      <Card.Img
                         className="d-block w-100"
                         src={p}
                         alt="First slide"

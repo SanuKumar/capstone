@@ -28,7 +28,7 @@ const Header = ({ handleProductSearch, isUserLoggedIn }) => {
   }
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
+    <Navbar bg="primary" variant="dark" expand="lg" fixed="top">
       <Container>
         <Navbar.Brand onClick={() => history.push('/')} style={{ cursor: "pointer" }}>Product Inventory</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
