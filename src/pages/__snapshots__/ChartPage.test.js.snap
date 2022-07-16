@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders Chart correctly when there are products 1`] = `
+Array [
+  <div
+    style={
+      Object {
+        "marginTop": "-4rem",
+        "textAlign": "center",
+      }
+    }
+  >
+    <h2>
+      Top Rated Product Above 3 Stars
+    </h2>
+  </div>,
+  <div
+    className="container"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-lg-10 col-md-8 col-sm-12 col-12"
+      >
+        <canvas
+          height={150}
+          role="img"
+          width={300}
+        />
+      </div>
+      <div
+        className="col"
+      />
+    </div>
+  </div>,
+]
+`;

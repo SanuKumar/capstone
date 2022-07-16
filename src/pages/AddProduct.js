@@ -64,7 +64,7 @@ const AddProduct = ({ fetchProductCallBack }) => {
       }
     } catch (error) {
       console.log(error)
-      toast.error("Error while Adding Product", {
+      toast.error("Error while adding product", {
         position: toast.POSITION.TOP_CENTER
       })
     }

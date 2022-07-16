@@ -108,22 +108,28 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
   }
 
   const deleteMultipleProducts = async () => {
-    if (window.confirm('Are you sure want to delete selected products')) {
-      try {
-        delMulProduct.map((did) => {
-          axios.delete(`http://localhost:3002/products/${did}`)
-        })
-        toast.success("Product's deleted successfully!!", {
-          position: toast.POSITION.TOP_CENTER
-        });
-        await timeout(500);
-        fetchProductCallBack()
-        setDelMulProduct([])
-      } catch (error) {
-        toast.error("Error while deleting product", {
-          position: toast.POSITION.TOP_CENTER
-        });
+    if (isUserLoggedIn) {
+      if (window.confirm('Are you sure want to delete selected products')) {
+        try {
+          delMulProduct.map((did) => {
+            axios.delete(`http://localhost:3002/products/${did}`)
+          })
+          toast.success("Product's deleted successfully!!", {
+            position: toast.POSITION.TOP_CENTER
+          });
+          await timeout(500);
+          fetchProductCallBack()
+          setDelMulProduct([])
+        } catch (error) {
+          toast.error("Error while deleting product", {
+            position: toast.POSITION.TOP_CENTER
+          });
+        }
       }
+    } else {
+      toast.error("Please login to delete products", {
+        position: toast.POSITION.TOP_CENTER
+      })
     }
   }
 
@@ -171,13 +177,13 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
               <Col className='m-1'>
                 <div style={{ margin: "2px", width: "10.5rem" }}>
                   {delMulProduct.length > 1 &&
-                    <Button variant="danger" onClick={deleteMultipleProducts}>Delete Product's <RiDeleteBin6Line /></Button>
+                    <Button variant="danger" onClick={deleteMultipleProducts}>Delete Product's <RiDeleteBin6Line style={{ marginTop: "-2px" }} /></Button>
                   }
                 </div>
               </Col>
               <Col className='m-1'>
                 <div style={{ margin: "2px", width: "9rem" }}>
-                  <Button onClick={handleAddProduct}>Add Product <CgAddR /></Button>
+                  <Button onClick={handleAddProduct}>Add Product <CgAddR style={{ marginTop: "-2px" }} /></Button>
                 </div>
               </Col>
             </Row>
@@ -250,8 +256,8 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
                           </Card.Text>
                         }
                         <div className='button-wrapper'>
-                          <Button variant="primary" onClick={() => handleEditProduct(p.id)}>Edit <AiOutlineEdit /></Button>
-                          <Button variant="danger" onClick={() => handleShow(p.id)}>Delete <RiDeleteBin6Line /></Button>
+                          <Button variant="primary" onClick={() => handleEditProduct(p.id)}>Edit <AiOutlineEdit style={{ marginTop: "-2px" }} /></Button>
+                          <Button variant="danger" onClick={() => handleShow(p.id)}>Delete <RiDeleteBin6Line style={{ marginTop: "-2px" }} /></Button>
                         </div>
                       </Card.Body>
                     </Card>
