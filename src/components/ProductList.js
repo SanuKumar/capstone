@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Container, Card, Button, Row, Col, Modal } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react'
+import { Container, Card, Button, Row, Col, Modal, DropdownButton, Dropdown } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import Loader from './Loader';
 import "./ProductList.css"
@@ -10,8 +10,9 @@ import axios from "axios"
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { CgAddR } from 'react-icons/cg';
+import { FcFilledFilter } from "react-icons/fc"
 
-const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }) => {
+const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack, handleFilter }) => {
   let history = useHistory();
   const [delMulProduct, setDelMulProduct] = useState([])
   const [show, setShow] = useState(false);
@@ -48,6 +49,7 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
     }
   }
 
+  //delay the call by specific time
   const timeout = (time) => {
     return new Promise(res => setTimeout(res, time));
   }
@@ -111,9 +113,7 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
     if (isUserLoggedIn) {
       if (window.confirm('Are you sure want to delete selected products')) {
         try {
-          delMulProduct.map((did) => {
-            axios.delete(`http://localhost:3002/products/${did}`)
-          })
+          delMulProduct.map((did) => axios.delete(`http://localhost:3002/products/${did}`))
           toast.success("Product's deleted successfully!!", {
             position: toast.POSITION.TOP_CENTER
           });
@@ -133,6 +133,27 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
     }
   }
 
+  const [productArray, setProductArray] = useState([])
+
+  useEffect(() => {
+    fetchProduct();
+  }, [])
+
+  const fetchProduct = async () => {
+    try {
+      const res = await axios.get(`http://localhost:3002/products`)
+      let data = [...res.data, { "name": "All", "category": "All" }]
+      setProductArray(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const categoryName = [...new Map(productArray.map((item) => [item['category'].toUpperCase(), item.category.toUpperCase()])).values()]
+
+  const filterData = (key) => {
+    handleFilter(key)
+  }
 
   return (
     <>
@@ -140,7 +161,15 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack }
       <Container className='container-wrapper'>
         <Row>
           <Col lg={10} md={10} sm={12}>
-            <h2>Customise Product Fields</h2>
+            <h2>Customise Product Fields
+              <div style={{ height: "2px", width: "2px" }}>
+                <DropdownButton id="dropdown-basic-button" variant="warning" title={<FcFilledFilter />}>
+                  {categoryName && categoryName.map((c) => (
+                    <Dropdown.Item key={c} onClick={() => filterData(c)}>{c.toUpperCase()}</Dropdown.Item>
+                  ))}
+                </DropdownButton>
+              </div>
+            </h2>
             <form className='form-wrapper'>
               <label>Product Name</label>
               <input

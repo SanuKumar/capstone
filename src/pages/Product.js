@@ -116,7 +116,8 @@ const Product = ({ fetchProductCallBack }) => {
                 </Carousel>
                 <Card.Body>
                   <Card.Title>{productData.name}</Card.Title>
-                  <Card.Text>
+                  <hr />
+                  <Card.Text className='card-text-formatter'>
                     {productData.description}
                   </Card.Text>
                 </Card.Body>

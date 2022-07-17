@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Bar } from "react-chartjs-2";
 import Chart from 'chart.js/auto';
 import { Container, Row, Col } from 'react-bootstrap';
 
-const ChartPage = ({ products }) => {
+const ChartPage = ({ products, fetchProductCallBack }) => {
+
+	useEffect(() => {
+		if (fetchProductCallBack) return fetchProductCallBack()
+	}, [])
 	let topProducts = products && products.filter((p) => {
 		if (p.rating > 3)
 			return p

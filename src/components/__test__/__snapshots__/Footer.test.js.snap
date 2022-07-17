@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer page snapshot renders correctly 1`] = `
+<DocumentFragment>
+  <footer
+    class="footer"
+  >
+    <p
+      style="color: white; text-align: center;"
+    >
+      Sanu ©. All rights reserved.
+    </p>
+  </footer>
+</DocumentFragment>
+`;

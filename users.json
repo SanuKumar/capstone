@@ -17,6 +17,15 @@
       "location": "Bangalore",
       "phoneNumber": "",
       "id": "hRXDGIZ"
+    },
+    {
+      "email": "sagar@sagar.com",
+      "password": "1",
+      "firstname": "Sagar",
+      "lastname": "Kumar",
+      "location": "Bangalore",
+      "phoneNumber": "",
+      "id": "D1Fn98r"
     }
   ]
 }

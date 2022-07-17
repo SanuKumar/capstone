@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, Suspense, lazy } from "react"
 import './App.css';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -10,7 +10,6 @@ import {
   BrowserRouter
 } from "react-router-dom";
 import ChartPage from "./pages/ChartPage";
-import { Suspense, lazy } from 'react';
 import Loader from "./components/Loader";
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -65,6 +64,14 @@ const App = () => {
     }
   }
 
+  const handleFilter = (key) => {
+    if (key.toLowerCase() === "all") {
+      return fetchProduct()
+    }
+    const filtedProducts = searchResult.filter((p) => p.category.toLowerCase() === key.toLowerCase())
+    setProducts(filtedProducts)
+  }
+
   return (
     <BrowserRouter>
       <ToastContainer autoClose={1000} />
@@ -72,12 +79,12 @@ const App = () => {
       <Suspense fallback={<Loader />}>
         <div style={{ padding: "10rem 0 5rem 0" }}>
           <Switch>
-            <Route exact path="/" ><ProductList products={products} loading={loading} isUserLoggedIn={isUserLoggedIn} fetchProductCallBack={fetchProductCallBack} /></Route>
+            <Route exact path="/" ><ProductList handleFilter={handleFilter} products={products} loading={loading} isUserLoggedIn={isUserLoggedIn} fetchProductCallBack={fetchProductCallBack} /></Route>
             <Route exact path="/product/:id"><Product isUserLoggedIn={isUserLoggedIn} fetchProductCallBack={fetchProductCallBack} /></Route>
             <Route exact path="/login"><Login /></Route>
             <Route exact path="/register"><Register /></Route>
             <Route exact path="/about"><About /></Route>
-            <Route exact path="/chart"><ChartPage products={products} /></Route>
+            <Route exact path="/chart"><ChartPage products={products} fetchProductCallBack={fetchProductCallBack} /></Route>
             <Route exact path="/addproduct"><AddProduct fetchProductCallBack={fetchProductCallBack} /></Route>
             <Route path="*" component={PageNotFound} />
           </Switch>

@@ -1,0 +1,175 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`About page snapshot renders correctly 1`] = `
+<DocumentFragment>
+  <h2
+    style="text-align: center; margin: -4rem 0px 2rem 0px;"
+  >
+    About Product Inventory
+  </h2>
+  <div
+    class="container"
+  >
+    <hr />
+    <div
+      class="row"
+    >
+      <div
+        class="col-sm-6 col-12"
+      >
+        <div
+          class="card"
+        >
+          <div
+            class="carousel slide carousel-dark"
+          >
+            <div
+              class="carousel-indicators"
+            >
+              <button
+                aria-current="true"
+                aria-label="Slide 1"
+                class="active"
+                data-bs-target=""
+                type="button"
+              />
+              <button
+                aria-current="false"
+                aria-label="Slide 2"
+                data-bs-target=""
+                type="button"
+              />
+              <button
+                aria-current="false"
+                aria-label="Slide 3"
+                data-bs-target=""
+                type="button"
+              />
+              <button
+                aria-current="false"
+                aria-label="Slide 4"
+                data-bs-target=""
+                type="button"
+              />
+            </div>
+            <div
+              class="carousel-inner"
+            >
+              <div
+                class="active carousel-item"
+                interval="1000"
+              >
+                <img
+                  alt="about"
+                  class="card-img-top"
+                  height="400"
+                  src="https://www.smartertech.id/wp-content/uploads/2021/08/keeppack-1.png"
+                  width="200"
+                />
+              </div>
+              <div
+                class="carousel-item"
+                interval="1000"
+              >
+                <img
+                  alt="about"
+                  class="card-img-top"
+                  height="400"
+                  src="https://static.vecteezy.com/system/resources/previews/005/441/345/non_2x/inventory-management-with-goods-demand-and-stock-supply-tiny-person-concept-vector.jpg"
+                  width="200"
+                />
+              </div>
+              <div
+                class="carousel-item"
+                interval="1000"
+              >
+                <img
+                  alt="about"
+                  class="card-img-top"
+                  height="400"
+                  src="https://miro.medium.com/max/1000/1*ka3E4I_7AFezzqPH0K3Ncw.jpeg"
+                  width="200"
+                />
+              </div>
+              <div
+                class="carousel-item"
+                interval="1000"
+              >
+                <img
+                  alt="about"
+                  class="card-img-top"
+                  height="400"
+                  src="https://safsms.com/blog/wp-content/uploads/2017/06/what-is-inventory-management.png"
+                  width="200"
+                />
+              </div>
+            </div>
+            <a
+              class="carousel-control-prev"
+              href="#"
+              role="button"
+              tabindex="0"
+            >
+              <span
+                aria-hidden="true"
+                class="carousel-control-prev-icon"
+              />
+              <span
+                class="visually-hidden"
+              >
+                Previous
+              </span>
+            </a>
+            <a
+              class="carousel-control-next"
+              href="#"
+              role="button"
+              tabindex="0"
+            >
+              <span
+                aria-hidden="true"
+                class="carousel-control-next-icon"
+              />
+              <span
+                class="visually-hidden"
+              >
+                Next
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-sm-6 col-12"
+      >
+        <div
+          style="font-size: 25px; text-align: justify;"
+        >
+          Product inventory is used to record information about the amount of available goods and products our company offers. Start by entering a product's name, inventory ID number, description, manufacture, category, location, price and quantity.
+        </div>
+        <hr />
+        <h4>
+          Features Available
+        </h4>
+        <ul>
+          <li>
+            Add, Edit and Delete Product
+          </li>
+          <li>
+            Multiple Products Deletion
+          </li>
+          <li>
+            Search and Filter products
+          </li>
+          <li>
+            User's Registration
+          </li>
+          <li>
+            Top Product Rated Chart
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
