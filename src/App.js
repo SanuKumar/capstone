@@ -7,6 +7,7 @@ import Product from "./pages/Product"
 import {
   Switch,
   Route,
+  BrowserRouter
 } from "react-router-dom";
 import ChartPage from "./pages/ChartPage";
 import { Suspense, lazy } from 'react';
@@ -48,7 +49,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    setIsUserLoggedIn(JSON.parse(localStorage.getItem('isUserLoggedIn')))
+    setIsUserLoggedIn(JSON.parse(sessionStorage.getItem('isUserLoggedIn')))
   }, [])
 
   const fetchProductCallBack = () => {
@@ -65,7 +66,7 @@ const App = () => {
   }
 
   return (
-    <>
+    <BrowserRouter>
       <ToastContainer autoClose={1000} />
       <Header handleProductSearch={handleProductSearch} isUserLoggedIn={isUserLoggedIn} />
       <Suspense fallback={<Loader />}>
@@ -83,7 +84,7 @@ const App = () => {
         </div>
       </Suspense>
       <Footer />
-    </>
+    </BrowserRouter>
   );
 }
 

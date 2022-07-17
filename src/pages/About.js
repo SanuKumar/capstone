@@ -20,16 +20,17 @@ const About = () => {
             <Card>
               <Carousel variant="dark" indicators controls>
                 {imageList && imageList.map((img) => (
-                  <Carousel.Item interval={1000}>
+                  <Carousel.Item interval={1000} key={img}>
                     <Card.Img variant="top" height={400} width={200} src={img} alt="about" />
                   </Carousel.Item>
                 ))}
               </Carousel>
             </Card></Col>
           <Col xs={12} sm={6}>
-            <div style={{ fontSize: "25px", textAlign: "justify" }}>Product Inventory means all inventory of the Seller to the extent used or held for use primarily
-              in the Business, including all finished goods, sub-assemblies, works in process
-              and raw materials (if any), as of the Closing Date.
+            <div style={{ fontSize: "25px", textAlign: "justify" }}>
+              Product inventory is used to record information about the amount of available goods 
+              and products our company offers. Start by entering a product's name, inventory ID 
+              number, description, manufacture, category, location, price and quantity.
             </div>
             <hr />
             <h4>Features Available</h4>

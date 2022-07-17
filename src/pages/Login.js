@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { Formik, useFormikContext, Form } from 'formik'
 import * as Yup from "yup"
 
-const Login = ({ updateLocalStorage }) => {
+const Login = () => {
   let history = useHistory()
   const [usersData, setUsersData] = useState([])
   const initialValues = {
@@ -43,7 +43,7 @@ const Login = ({ updateLocalStorage }) => {
         position: toast.POSITION.TOP_CENTER
       });
       await timeout(2000);
-      localStorage.setItem('isUserLoggedIn', JSON.stringify(res))
+      sessionStorage.setItem('isUserLoggedIn', JSON.stringify(res))
       history.push('/')
       window.location.reload();
     } else {

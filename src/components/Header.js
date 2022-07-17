@@ -24,7 +24,7 @@ const Header = ({ handleProductSearch, isUserLoggedIn }) => {
   )
 
   const handleLogout = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     history.push('/')
     window.location.reload();
   }
