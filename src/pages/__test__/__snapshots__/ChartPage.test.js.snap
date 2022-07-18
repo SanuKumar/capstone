@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders Chart correctly when there are products 1`] = `
+exports[`Chart Page Sanpshot 1`] = `
 <DocumentFragment>
   <div
     style="text-align: center; margin-top: -4rem;"

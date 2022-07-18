@@ -3,7 +3,7 @@ import { cleanup, render } from "@testing-library/react"
 
 afterEach(cleanup)
 
-test('renders Chart correctly when there are products', () => {
+test('Chart Page Sanpshot', () => {
   const products = [{
     "id": 2,
     "name": "iPhone X",
