@@ -84,6 +84,7 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack, 
   };
 
   const handleDeleteProduct = async () => {
+    setDelMulProduct([])
     setShow(false)
     try {
       let res = await axios.delete(`http://localhost:3002/products/${selectedId}`)
@@ -91,6 +92,7 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack, 
         toast.success("Product deleted successfully!!", {
           position: toast.POSITION.TOP_CENTER
         });
+        fetchProduct();
         await timeout(500);
         fetchProductCallBack()
       }
@@ -117,6 +119,7 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack, 
           toast.success("Product's deleted successfully!!", {
             position: toast.POSITION.TOP_CENTER
           });
+          fetchProduct();
           await timeout(500);
           fetchProductCallBack()
           setDelMulProduct([])
@@ -161,7 +164,7 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack, 
       <Container className='container-wrapper'>
         <Row>
           <Col lg={10} md={10} sm={12}>
-            <h2>Customise Product Fields
+            <h2 data-testid="product-field-header">Customise Product Fields
               <div style={{ height: "2px", width: "2px" }}>
                 <DropdownButton id="dropdown-basic-button" variant="warning" title={<FcFilledFilter />}>
                   {categoryName && categoryName.map((c) => (
@@ -212,7 +215,7 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack, 
               </Col>
               <Col className='m-1'>
                 <div style={{ margin: "2px", width: "9rem" }}>
-                  <Button onClick={handleAddProduct}>Add Product <CgAddR style={{ marginTop: "-2px" }} /></Button>
+                  <Button onClick={handleAddProduct} data-testid="add-product-btn">Add Product <CgAddR style={{ marginTop: "-2px" }} /></Button>
                 </div>
               </Col>
             </Row>

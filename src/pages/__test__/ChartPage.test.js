@@ -3,7 +3,7 @@ import { cleanup, render } from "@testing-library/react"
 
 afterEach(cleanup)
 
-it('renders Chart correctly when there are products', () => {
+test('renders Chart correctly when there are products', () => {
   const products = [{
     "id": 2,
     "name": "iPhone X",
@@ -38,3 +38,4 @@ it('renders Chart correctly when there are products', () => {
   const { asFragment } = render(<ChartPage products={products} />)
   expect(asFragment()).toMatchSnapshot();
 });
+

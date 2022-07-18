@@ -1,39 +1,30 @@
 import ProductList from '../ProductList';
-import { cleanup, render } from "@testing-library/react"
+import { cleanup, screen, render } from "@testing-library/react"
 
 afterEach(cleanup)
 
-
-it('renders ProductList correctly when there are products', () => {
-  const products = [{
-    "id": 2,
-    "name": "iPhone X",
-    "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
-    "price": 899,
-    "quantity": 34,
-    "manufacture": "Apple",
-    "category": "smartphones",
-    "thumbnail": "https://dummyjson.com/image/i/products/2/thumbnail.jpg",
-    "images": [
-      "https://dummyjson.com/image/i/products/2/1.jpg",
-      "https://dummyjson.com/image/i/products/2/2.jpg",
-      "https://dummyjson.com/image/i/products/2/3.jpg",
-      "https://dummyjson.com/image/i/products/2/thumbnail.jpg"
-    ]
-  },
-  {
-    "id": 3,
-    "name": "Samsung Universe 9",
-    "description": "Samsung's new variant which goes beyond Galaxy to the Universe",
-    "price": 1249,
-    "quantity": 36,
-    "manufacture": "Samsung",
-    "category": "smartphones",
-    "thumbnail": "https://dummyjson.com/image/i/products/3/thumbnail.jpg",
-    "images": [
-      "https://dummyjson.com/image/i/products/3/1.jpg"
-    ]
-  }]
+test('renders ProductList correctly when there are empy products array', () => {
+  const products = []
   const { asFragment } = render(<ProductList products={products} />)
   expect(asFragment()).toMatchSnapshot();
 });
+
+test("Product Field Header", () => {
+  render(<ProductList />)
+  const header = screen.getByTestId('product-field-header')
+  expect(header.textContent).toBe('Customise Product Fields')
+})
+
+describe("When products array props passed to ProductList component is null", () => {
+  render(<ProductList products={null} />)
+
+  test("should not crash and no Product Component is rendered", () => {
+    render(<ProductList />)
+  })
+})
+
+
+test("Check if Add button is rendered", () => {
+  render(<ProductList />)
+  expect(screen.getByRole('button', { name: /add product/i })).toHaveTextContent('Add Product')
+})

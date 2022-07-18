@@ -6,6 +6,7 @@ const PageNotFound = () => {
   let history = useHistory()
   return (
     <>
+      <h1>Page Not Found</h1>
       <div style={{ float: "right", margin: "-5rem 1rem" }}>
         <Button onClick={() => history.push("/")}>Go Back Home</Button>
       </div>
