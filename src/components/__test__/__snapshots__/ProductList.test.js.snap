@@ -156,7 +156,11 @@ exports[`renders ProductList correctly when there are empy products array 1`] = 
   >
     <div
       class="justify-content-md-center row"
-    />
+    >
+      <h5>
+        No Product Found
+      </h5>
+    </div>
   </div>
 </DocumentFragment>
 `;

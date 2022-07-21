@@ -242,7 +242,7 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack, 
           <Loader /> :
           <Container>
             <Row className="justify-content-md-center">
-              {products ? products.map((p) => {
+              {products && products.length !== 0 ? products.map((p) => {
                 return (
                   <Col xs={12} sm={6} md={6} lg={3} key={p.id}>
                     <Card key={p.id} className="card-wrapper">
