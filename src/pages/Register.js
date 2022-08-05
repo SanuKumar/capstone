@@ -31,7 +31,7 @@ const Register = () => {
   })
 
   const fetchUser = async () => {
-    let { data } = await axios.get(`http://localhost:3001/users`)
+    let { data } = await axios.get(`https://products-json-server.herokuapp.com/users`)
     setRegisterUser(data)
   }
   useEffect(() => {
@@ -53,7 +53,7 @@ const Register = () => {
         position: toast.POSITION.TOP_CENTER
       })
     } else {
-      let res = await axios.post(`http://localhost:3001/users`, values)
+      let res = await axios.post(`https://products-json-server.herokuapp.com/users`, values)
       if (res.statusText === 'Created') {
         toast.success("User register successfully", {
           position: toast.POSITION.TOP_CENTER

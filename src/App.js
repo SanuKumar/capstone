@@ -34,7 +34,7 @@ const App = () => {
   const fetchProduct = async () => {
     setLoading(true)
     try {
-      const res = await axios.get(`http://localhost:3002/products`)
+      const res = await axios.get(`https://products-json-server.herokuapp.com/products`)
       setLoading(false)
       let reversedData = res.data.reverse()
       setProducts(reversedData)

@@ -20,7 +20,7 @@ const Login = () => {
   })
 
   const fetchUser = async () => {
-    let { data } = await axios.get(`http://localhost:3001/users`)
+    let { data } = await axios.get(`https://products-json-server.herokuapp.com/users`)
     setUsersData(data)
   }
   useEffect(() => {

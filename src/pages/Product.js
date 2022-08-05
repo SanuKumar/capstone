@@ -30,7 +30,7 @@ const Product = ({ fetchProductCallBack }) => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
-      const { data } = await axios.get(`http://localhost:3002/products/${id}`)
+      const { data } = await axios.get(`https://products-json-server.herokuapp.com/products/${id}`)
       setLoading(false)
       setProductData(data)
     }
@@ -55,7 +55,7 @@ const Product = ({ fetchProductCallBack }) => {
 
   const handleUpdateProduct = async (values) => {
     values.thumbnail ? values.images[0] = values.thumbnail : values.images[0] = "https://media.istockphoto.com/vectors/no-image-available-sign-vector-id922962354?k=20&m=922962354&s=612x612&w=0&h=f-9tPXlFXtz9vg_-WonCXKCdBuPUevOBkp3DQ-i0xqo="
-    let res = await axios.patch(`http://localhost:3002/products/${values.id}`, values)
+    let res = await axios.patch(`https://products-json-server.herokuapp.com/products/${values.id}`, values)
     if (res.statusText === 'OK') {
       toast.success("Product updated successfully!!", {
         position: toast.POSITION.TOP_CENTER

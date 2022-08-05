@@ -10,8 +10,8 @@ In the project directory, you can run:
 
 Runs the app in the development mode.\
 Open [http://localhost:3000] to view UI in browser.
-Open [http://localhost:3001/users] to view Users JSON data in browser.
-Open [http://localhost:3002/products] to view Products JSON data in browser.
+Open [https://products-json-server.herokuapp.com/users] to view Users JSON data in browser.
+Open [https://products-json-server.herokuapp.com/products] to view Products JSON data in browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.

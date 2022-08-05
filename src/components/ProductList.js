@@ -87,7 +87,7 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack, 
     setDelMulProduct([])
     setShow(false)
     try {
-      let res = await axios.delete(`http://localhost:3002/products/${selectedId}`)
+      let res = await axios.delete(`https://products-json-server.herokuapp.com/products/${selectedId}`)
       if (res.status === 200) {
         toast.success("Product deleted successfully!!", {
           position: toast.POSITION.TOP_CENTER
@@ -115,7 +115,7 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack, 
     if (isUserLoggedIn) {
       if (window.confirm('Are you sure want to delete selected products')) {
         try {
-          delMulProduct.map((did) => axios.delete(`http://localhost:3002/products/${did}`))
+          delMulProduct.map((did) => axios.delete(`https://products-json-server.herokuapp.com/products/${did}`))
           toast.success("Product's deleted successfully!!", {
             position: toast.POSITION.TOP_CENTER
           });
@@ -144,7 +144,7 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack, 
 
   const fetchProduct = async () => {
     try {
-      const res = await axios.get(`http://localhost:3002/products`)
+      const res = await axios.get(`https://products-json-server.herokuapp.com/products`)
       let data = [...res.data, { "name": "All", "category": "All" }]
       setProductArray(data)
     } catch (error) {

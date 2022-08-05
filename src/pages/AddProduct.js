@@ -52,7 +52,7 @@ const AddProduct = ({ fetchProductCallBack }) => {
   const handleAddProduct = async (values) => {
     values.thumbnail ? values.images[0] = values.thumbnail : values.images[0] = "https://media.istockphoto.com/vectors/no-image-available-sign-vector-id922962354?k=20&m=922962354&s=612x612&w=0&h=f-9tPXlFXtz9vg_-WonCXKCdBuPUevOBkp3DQ-i0xqo="
     try {
-      let res = await axios.post(`http://localhost:3002/products`, values)
+      let res = await axios.post(`https://products-json-server.herokuapp.com/products`, values)
       if (res.statusText === 'Created') {
         setFormData(initialValue)
         toast.success("Product created successfully", {
