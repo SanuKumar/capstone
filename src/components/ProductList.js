@@ -163,7 +163,7 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack, 
       <ToastContainer autoClose={1000} />
       <Container className='container-wrapper'>
         <Row>
-          <Col lg={10} md={10} sm={12}>
+          <Col lg={9} md={9} sm={12} xs={12}>
             <h2 data-testid="product-field-header">Customise Product Fields
               <div style={{ height: "2px", width: "2px" }}>
                 <DropdownButton id="dropdown-basic-button" variant="warning" title={<FcFilledFilter />}>
@@ -174,48 +174,56 @@ const ProductList = ({ products, loading, isUserLoggedIn, fetchProductCallBack, 
               </div>
             </h2>
             <form className='form-wrapper'>
-              <label>Product Name</label>
+              <label htmlFor='name_id'>Product Name</label>
               <input
                 type="checkbox"
                 name="name"
+                id="name_id"
                 checked={customField.name}
                 onChange={onSiteChanged}
               />
-              <label>Manufacture</label>
+              <label htmlFor='manufacture_id'>Manufacture</label>
               <input
                 type="checkbox"
                 name="manufacture"
+                id="manufacture_id"
                 checked={customField.manufacture}
                 onChange={onSiteChanged}
               />
-              <label>Rating</label>
+              <label htmlFor='rating_id'>Rating</label>
               <input
                 type="checkbox"
                 name="rating"
+                id="rating_id"
                 checked={customField.rating}
                 onChange={onSiteChanged}
               />
-              <label>Description</label>
+              <label htmlFor='description_id'>Description</label>
               <input
                 type="checkbox"
                 name="description"
+                id="description_id"
                 checked={customField.description}
                 onChange={onSiteChanged}
               />
             </form>
           </Col>
-          <Col>
+          <Col lg={3} md={3} sm={12} xs={12}>
             <Row>
               <Col className='m-1'>
-                <div style={{ margin: "2px", width: "10.5rem" }}>
+                <div>
                   {delMulProduct.length > 1 &&
-                    <Button variant="danger" onClick={deleteMultipleProducts}>Delete Product's <RiDeleteBin6Line style={{ marginTop: "-2px" }} /></Button>
+                    <Button variant="danger" onClick={deleteMultipleProducts} style={{ width: "8rem" }}>
+                      <span style={{ fontSize: "10px" }}>Delete Product's</span> <RiDeleteBin6Line style={{ marginTop: "-2px" }} />
+                    </Button>
                   }
                 </div>
               </Col>
               <Col className='m-1'>
-                <div style={{ margin: "2px", width: "9rem" }}>
-                  <Button onClick={handleAddProduct} data-testid="add-product-btn">Add Product <CgAddR style={{ marginTop: "-2px" }} /></Button>
+                <div>
+                  <Button onClick={handleAddProduct} data-testid="add-product-btn" style={{ width: "8rem" }}>
+                    <span style={{ fontSize: "10px" }}>Add Product</span> <CgAddR style={{ marginTop: "-2px" }} />
+                  </Button>
                 </div>
               </Col>
             </Row>
