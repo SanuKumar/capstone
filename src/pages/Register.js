@@ -68,7 +68,8 @@ const Register = () => {
     const formik = useFormikContext();
     return (
       <Prompt
-        when={formik.dirty && formik.submitCount === 0}
+        when={formik.dirty}
+        // when={formik.dirty && formik.submitCount === 0}
         message="Are you sure you want to leave? You have with unsaved changes."
       />
     );
@@ -79,115 +80,124 @@ const Register = () => {
     <>
       <ToastContainer autoClose={1000} />
       <Container>
-        <div><h2>Register User</h2></div>
-        <hr />
-        <br />
-        <Formik
-          initialValues={initialData}
-          validationSchema={validationSchema}
-          onSubmit={(values, { setSubmitting }) => {
-            handleSubmit(values)
-            setSubmitting(false)
-          }}
-        >
-          {({
-            values,
-            errors,
-            touched,
-            handleSubmit,
-            isSubmitting,
-            getFieldProps
-          }) => (
-            <Form onSubmit={handleSubmit} autoComplete="off">
-              <PromptIfDirty />
-              <Row>
-                <Col sm={12} md={2}>Email</Col>
-                <Col>
-                  <input
-                    name="email"
-                    placeholder="Enter Email ID"
-                    {...getFieldProps("email")}
-                    autoComplete="new-password"
-                  />
-                  <span className='form-error-msg'>{errors.email && touched.email && errors.email}</span>
-                </Col>
-              </Row>
-              <br />
-              <Row>
-                <Col sm={12} md={2}>Password</Col>
-                <Col>
-                  <input
-                    type="password"
-                    placeholder="Enter Password"
-                    {...getFieldProps("password")}
-                    autoComplete="new-password"
-                  />
-                  <span className='form-error-msg'>{errors.password && touched.password && errors.password}</span>
-                </Col>
-              </Row>
-              <br />
-              <Row>
-                <Col sm={12} md={2}>First Name</Col>
-                <Col>
-                  <input
-                    name="firstname"
-                    {...getFieldProps("firstname")}
-                    autoComplete="new-password"
-                  />
-                  <span className='form-error-msg'>{errors.firstname && touched.firstname && errors.firstname}</span>
-                </Col>
-              </Row>
-              <br />
-              <Row>
-                <Col sm={12} md={2}>Last Name</Col>
-                <Col>
-                  <input
-                    name="lastname"
-                    {...getFieldProps("lastname")}
-                    autoComplete="new-password"
-                  />
-                  <span className='form-error-msg'>{errors.lastname && touched.lastname && errors.lastname}</span>
-                </Col>
-              </Row>
-              <br />
-              <Row>
-                <Col sm={12} md={2}>Location</Col>
-                <Col>
-                  <input
-                    name="location"
-                    {...getFieldProps("location")}
-                    autoComplete="new-password"
-                  />
-                  <span className='form-error-msg'>{errors.location && touched.location && errors.location}</span>
-                </Col>
-              </Row>
-              <br />
-              <Row>
-                <Col sm={12} md={2}>Mobile Number</Col>
-                <Col>
-                  <input
-                    type="phoneNumber"
-                    name="phoneNumber"
-                    {...getFieldProps("phoneNumber")}
-                    autoComplete="new-password"
-                  />
-                  <span className='form-error-msg'>{errors.phoneNumber && touched.phoneNumber && errors.phoneNumber}</span>
-                </Col>
-              </Row>
-              <br />
-              <Row>
-                <Col sm={12} md={2}></Col>
-                <Col>
-                  <Button
-                    type='submit'
-                    disabled={isSubmitting}
-                  >Register
-                  </Button>
-                </Col>
-              </Row>
-            </Form>
-          )}
-        </Formik>
+        <Row>
+          <Col lg={6} className="d-none d-lg-block">
+            <div>
+              <img src="https://image.shutterstock.com/image-vector/red-vector-banner-register-now-260nw-1470612773.jpg" alt="login-img" />
+            </div>
+          </Col>
+          <Col lg={6} md={12} sm={12} xs={12}>
+            <div><h2>Register User</h2></div>
+            <hr />
+            <br />
+            <Formik
+              initialValues={initialData}
+              validationSchema={validationSchema}
+              onSubmit={(values, { setSubmitting }) => {
+                handleSubmit(values)
+                setSubmitting(false)
+              }}
+            >
+              {({
+                values,
+                errors,
+                touched,
+                handleSubmit,
+                isSubmitting,
+                getFieldProps
+              }) => (
+                <Form onSubmit={handleSubmit} autoComplete="off">
+                  <PromptIfDirty />
+                  <Row>
+                    <Col sm={12} md={2}>Email</Col>
+                    <Col>
+                      <input
+                        name="email"
+                        placeholder="Enter Email ID"
+                        {...getFieldProps("email")}
+                        autoComplete="new-password"
+                      />
+                      <span className='form-error-msg'>{errors.email && touched.email && errors.email}</span>
+                    </Col>
+                  </Row>
+                  <br />
+                  <Row>
+                    <Col sm={12} md={2}>Password</Col>
+                    <Col>
+                      <input
+                        type="password"
+                        placeholder="Enter Password"
+                        {...getFieldProps("password")}
+                        autoComplete="new-password"
+                      />
+                      <span className='form-error-msg'>{errors.password && touched.password && errors.password}</span>
+                    </Col>
+                  </Row>
+                  <br />
+                  <Row>
+                    <Col sm={12} md={2}>First Name</Col>
+                    <Col>
+                      <input
+                        name="firstname"
+                        {...getFieldProps("firstname")}
+                        autoComplete="new-password"
+                      />
+                      <span className='form-error-msg'>{errors.firstname && touched.firstname && errors.firstname}</span>
+                    </Col>
+                  </Row>
+                  <br />
+                  <Row>
+                    <Col sm={12} md={2}>Last Name</Col>
+                    <Col>
+                      <input
+                        name="lastname"
+                        {...getFieldProps("lastname")}
+                        autoComplete="new-password"
+                      />
+                      <span className='form-error-msg'>{errors.lastname && touched.lastname && errors.lastname}</span>
+                    </Col>
+                  </Row>
+                  <br />
+                  <Row>
+                    <Col sm={12} md={2}>Location</Col>
+                    <Col>
+                      <input
+                        name="location"
+                        {...getFieldProps("location")}
+                        autoComplete="new-password"
+                      />
+                      <span className='form-error-msg'>{errors.location && touched.location && errors.location}</span>
+                    </Col>
+                  </Row>
+                  <br />
+                  <Row>
+                    <Col sm={12} md={2}>Mobile Number</Col>
+                    <Col>
+                      <input
+                        type="phoneNumber"
+                        name="phoneNumber"
+                        {...getFieldProps("phoneNumber")}
+                        autoComplete="new-password"
+                      />
+                      <span className='form-error-msg'>{errors.phoneNumber && touched.phoneNumber && errors.phoneNumber}</span>
+                    </Col>
+                  </Row>
+                  <br />
+                  <Row>
+                    <Col sm={12} md={2}></Col>
+                    <Col>
+                      <Button
+                        type='submit'
+                        disabled={isSubmitting}
+                      >Register
+                      </Button>
+                    </Col>
+                  </Row>
+                </Form>
+              )}
+            </Formik>
+          </Col>
+        </Row>
       </Container>
     </>
   )

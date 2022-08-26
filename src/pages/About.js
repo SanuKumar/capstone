@@ -35,8 +35,7 @@ const About = () => {
             <hr />
             <h4>Features Available</h4>
             <ul>
-              <li>Add, Edit and Delete Product</li>
-              <li>Multiple Products Deletion</li>
+              <li>Add, Edit and Delete Product available for register user's</li>
               <li>Search and Filter products</li>
               <li>User's Registration</li>
               <li>Top Product Rated Chart</li>
